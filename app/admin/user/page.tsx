@@ -1,17 +1,29 @@
-import UserTable from "@/components/layout/user-table";
-import type { Metadata } from "next";
+import UserTable from "@/components/layout/user-table"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: "Users",
-
+  title: "Users",
 }
 
 const UserPage = () => {
   return (
-    <div className="bg-slate-50 min-h-screen">
-      <div className="max-w-screen-md mx-auto py-10">
-        <h1 className="text-2xl font-bold">User List</h1>
+    <div className="bg-slate-50 min-h-screen p-6">
+      
+      <div className="max-w-screen-xl mx-auto">
+        
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            User Management
+          </h1>
+          <p className="text-sm text-gray-500">
+            Manage and monitor all users in your system
+          </p>
+        </div>
+
+        {/* Table */}
         <UserTable />
+
       </div>
     </div>
   )

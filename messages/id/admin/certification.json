@@ -1,0 +1,103 @@
+{
+  "page": {
+    "title": "Manajemen Sertifikasi",
+    "subtitle": "Kelola dan pantau semua sertifikasi dalam sistem",
+    "metadata": {
+      "title": "Manajemen Sertifikasi | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Sertifikasi",
+    "subtitle": "Total: {count} sertifikasi"
+  },
+
+  "search": {
+    "placeholder": "Cari sertifikasi..."
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Nama Sertifikasi",
+    "description": "Deskripsi",
+    "category": "Kategori",
+    "duration": "Durasi",
+    "price": "Harga",
+    "status": "Status",
+    "actions": "Aksi",
+    "created": "Dibuat pada:",
+    "createdBy": "Dibuat oleh:"
+  },
+
+  "buttons": {
+    "add": "Tambah Sertifikasi",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "save": "Simpan",
+    "update": "Perbarui",
+    "cancel": "Batal",
+    "loading": "Memuat..."
+  },
+
+  "empty": {
+    "title": "Tidak ada data sertifikasi"
+  },
+
+  "footer": {
+    "showing": "Menampilkan {count} sertifikasi"
+  },
+
+  "modal": {
+    "addTitle": "Tambah Sertifikasi",
+    "editTitle": "Edit Sertifikasi",
+
+    "addSubtitle": "Buat sertifikasi baru",
+    "editSubtitle": "Perbarui informasi sertifikasi"
+  },
+
+  "delete": {
+    "title": "Hapus Sertifikasi",
+    "subtitle": "Tindakan ini tidak dapat dibatalkan.",
+    "confirmation": "Apakah Anda yakin ingin menghapus"
+  },
+
+  "form": {
+    "nameId": "Nama Sertifikasi (ID)",
+    "nameEn": "Nama Sertifikasi (EN)",
+
+    "category": "Kategori",
+    "selectCategory": "Pilih Kategori",
+
+    "durationId": "Durasi (ID)",
+    "durationEn": "Durasi (EN)",
+
+    "price": "Harga",
+    "priceHint": "Kosongkan jika tidak digunakan",
+
+    "descId": "Deskripsi (ID)",
+    "descEn": "Deskripsi (EN)",
+
+    "status": "Status",
+
+    "placeholderName": "Contoh: Fullstack Developer",
+    "placeholderDurationId": "Contoh: 3 Bulan",
+    "placeholderDurationEn": "Contoh: 3 Months",
+    "placeholderDesc": "Deskripsi sertifikasi..."
+  },
+
+  "status": {
+    "active": "AKTIF",
+    "inactive": "NONAKTIF"
+  },
+
+  "toast": {
+    "createSuccess": "Sertifikasi berhasil dibuat",
+    "createFailed": "Gagal membuat sertifikasi",
+
+    "updateSuccess": "Sertifikasi berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui sertifikasi",
+
+    "deleteSuccess": "Sertifikasi berhasil dihapus",
+    "deleteFailed": "Gagal menghapus sertifikasi"
+  }
+}

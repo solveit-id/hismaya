@@ -1,0 +1,44 @@
+{
+  "page": {
+    "title": "Manajemen Testimonial",
+    "subtitle": "Kelola dan pantau semua testimonial dalam sistem",
+    "metadata": {
+      "title": "Manajemen Testimoni | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Testimonial",
+    "subtitle": "Total {count} testimonial"
+  },
+
+  "search": {
+    "placeholder": "Cari testimonial..."
+  },
+
+  "table": {
+    "no": "No",
+    "user": "Pengguna",
+    "testimonial": "Testimonial",
+    "status": "Status",
+    "actions": "Aksi"
+  },
+
+  "buttons": {
+    "visible": "Visible",
+    "hidden": "Hidden"
+  },
+
+  "toast": {
+    "updateSuccess": "Status testimonial berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui status testimonial"
+  },
+
+  "empty": {
+    "title": "Belum ada testimonial"
+  },
+
+  "footer": {
+    "showing": "Menampilkan {count} testimonial"
+  }
+}

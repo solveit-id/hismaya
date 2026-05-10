@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Category Management",
+    "subtitle": "Manage and monitor all categories in your system",
+    "metadata": {
+      "title": "Category Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "Category List",
+    "subtitle": "Total: {count} categories"
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Category Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created": "Created at:"
+  },
+
+  "buttons": {
+    "add": "Add Category",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+
+  "empty": {
+    "title": "No categories data found"
+  },
+
+  "footer": {
+    "showing": "Showing {count} categories"
+  },
+
+  "modal": {
+    "addTitle": "Add Category",
+    "editTitle": "Edit Category",
+
+    "addSubtitle": "Create a new program category",
+    "editSubtitle": "Update category information"
+  },
+
+  "delete": {
+    "title": "Delete Category",
+    "subtitle": "This action cannot be undone.",
+    "confirmation": "Are you sure want to delete"
+  },
+
+  "form": {
+    "nameId": "Category Name (Indonesia)",
+    "nameEn": "Category Name (English)",
+
+    "descId": "Description (Indonesia)",
+    "descEn": "Description (English)",
+
+    "placeholderName": "Example: Cloud Computing",
+    "placeholderDesc": "Category description..."
+  },
+
+  "toast": {
+    "createSuccess": "Category created successfully",
+    "createFailed": "Failed to create category",
+
+    "updateSuccess": "Category updated successfully",
+    "updateFailed": "Failed to update category",
+
+    "deleteSuccess": "Category deleted successfully",
+    "deleteFailed": "Failed to delete category"
+  }
+}

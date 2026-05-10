@@ -1,0 +1,79 @@
+{
+  "page": {
+    "title": "Manajemen User",
+    "subtitle": "Kelola dan pantau semua user dalam sistem",
+    "metadata": {
+      "title": "Manajemen User | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar User",
+    "subtitle": "Total: {count} user"
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Nama",
+    "email": "Email",
+    "phone": "Nomor Telepon",
+    "role": "Role",
+    "actions": "Aksi",
+    "created": "Dibuat pada:"
+  },
+
+  "buttons": {
+    "add": "Tambah User",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "save": "Simpan",
+    "update": "Perbarui",
+    "cancel": "Batal"
+  },
+
+  "empty": {
+    "title": "Tidak ada data user"
+  },
+
+  "footer": {
+    "showing": "Menampilkan {count} user"
+  },
+
+  "modal": {
+    "addTitle": "Tambah User",
+    "editTitle": "Edit User",
+
+    "addSubtitle": "Buat user baru",
+    "editSubtitle": "Perbarui informasi user"
+  },
+
+  "delete": {
+    "title": "Hapus User",
+    "subtitle": "Tindakan ini tidak dapat dibatalkan.",
+    "confirmation": "Apakah Anda yakin ingin menghapus"
+  },
+
+  "form": {
+    "fullName": "Nama Lengkap",
+    "email": "Email",
+    "phone": "Nomor Telepon",
+    "password": "Password",
+    "role": "Role"
+  },
+
+  "role": {
+    "admin": "ADMIN",
+    "user": "USER"
+  },
+
+  "toast": {
+    "createSuccess": "User berhasil dibuat",
+    "createFailed": "Gagal membuat user",
+
+    "updateSuccess": "User berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui user",
+
+    "deleteSuccess": "User berhasil dihapus",
+    "deleteFailed": "Gagal menghapus user"
+  }
+}

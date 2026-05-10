@@ -43,13 +43,19 @@ model User {
   id            String          @id @default(cuid())
   name          String?
   email         String          @unique
+  phone         String?         @unique @db.VarChar(20)
   emailVerified DateTime?       @map("email_verified")
   image         String?
   password      String?
-  role          Role            @default(USER) 
+  role          Role            @default(USER)
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
   accounts      Account[]
   sessions      Session[]
-  certifications Certification[] 
+  certifications Certification[]
+  testimonials  Testimonial[]
 
   @@map("users")
 }
@@ -63,19 +69,68 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
+model Category {
+  id             String          @id @default(cuid())
+
+  name           Json
+  desc           Json?
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  certifications Certification[]
+
+  @@map("categories")
+}
+
 model Certification {
   id          String   @id @default(cuid())
-  name        String
-  description String   @db.Text 
+
+  name        Json
+  desc        Json
+
+  duration    Json
+  price       Float
+  status      CertificationStatus @default(ACTIVE)
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
   adminId     String
   admin       User     @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
   @@map("certifications")
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+
+  testimonial Json
+  status      TestimonialStatus @default(VISIBLE)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("testimonials")
 }
 
 enum Role {
   ADMIN
   USER
+}
+
+enum CertificationStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum TestimonialStatus {
+  VISIBLE
+  HIDDEN
 }

@@ -1,14 +1,27 @@
 "use client"
 
 import { useFormState } from 'react-dom';
-import Link from 'next/link';
-import { signInCredentials } from '@/lib/action';
+import { Link } from "@/lib/i18n/navigation"
+import { signInCredentials } from '@/features/auth/action';
 import { LoginButton } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
 
 const formLogin = () => {
   const [state, formAction] = useFormState(signInCredentials, null);
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    if (
+        state?.success &&
+        state?.redirectTo
+    ) {
+        router.push(
+        state.redirectTo
+        );
+    }
+    }, [state, router]);
+
   return (
     <div>
       <form action={formAction} className='space-y-6'>
@@ -18,10 +31,10 @@ const formLogin = () => {
             </div>
         ): null}
         <div>
-            <label htmlFor="email" className='block mb-2 text-sm font-semibold text-white'>EMAIL</label>
-            <input type="email" name="email" placeholder="example@gmail.com" className='bg-white border border-white text-gray-900 rounded-[15px] w-full p-2.5 justify-center' />
+            <label htmlFor="login" className='block mb-2 text-sm font-semibold text-white'>EMAIL OR PHONE</label>
+            <input type="text" name="login" placeholder="example@gmail.com / 08123456789" className='bg-white border border-white text-gray-900 rounded-[15px] w-full p-2.5 justify-center' />
             <div aria-live='polite' aria-atomic='true'>
-                <span className='text-sm text-red-500 mt-2'>{state?.error?.email}</span>
+                <span className='text-sm text-red-500 mt-2'>{state?.error?.login}</span>
             </div>
         </div>
         <div className='relative'>

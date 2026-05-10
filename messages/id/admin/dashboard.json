@@ -1,0 +1,73 @@
+{
+  "page": {
+    "metadata": {
+      "title": "Beranda | Admin Hismaya"
+    }
+  },
+
+  "header": {
+    "welcome": "Selamat datang kembali, {name}",
+    "subtitle": "Berikut yang sedang terjadi pada sistem Anda hari ini"
+  },
+
+  "cards": {
+    "totalUsers": {
+      "title": "Total Pengguna",
+      "subtitle": "{total} admin terdaftar"
+    },
+
+    "activeSessions": {
+      "title": "Sesi Aktif",
+      "subtitle": "Sesi autentikasi yang sedang aktif"
+    },
+
+    "certifications": {
+      "title": "Sertifikasi",
+      "subtitle": "{total} sertifikasi aktif"
+    },
+
+    "visibleTestimonials": {
+      "title": "Testimonial Tampil",
+      "subtitle": "Testimonial publik yang ditampilkan"
+    }
+  },
+
+  "sections": {
+    "recentUsers": "Pengguna Terbaru",
+    "systemInformation": "Informasi Sistem",
+    "quickActions": "Aksi Cepat"
+  },
+
+  "system": {
+    "serverStatus": "Status Server",
+    "online": "Online",
+    "database": "Database",
+    "totalCategories": "Total Kategori",
+    "inactiveCertifications": "Sertifikasi Nonaktif",
+    "hiddenTestimonials": "Testimonial Disembunyikan"
+  },
+
+  "topSections": {
+    "users": "Pengguna",
+    "categories": "Kategori",
+    "certifications": "Sertifikasi",
+    "testimonials": "Testimonial"
+  },
+
+  "activities": {
+    "userRegistered": "telah mendaftar",
+    "certificationCreated": "Sertifikasi baru dibuat",
+    "testimonialSubmitted": "Testimonial baru dikirim"
+  },
+
+  "empty": {
+    "noUsers": "Belum ada pengguna"
+  },
+
+  "quickActions": {
+    "addUser": "Tambah User",
+    "addCategory": "Tambah Kategori",
+    "addCertification": "Tambah Sertifikasi",
+    "viewTestimonial": "Lihat Testimoni"
+  }
+}

@@ -1,17 +1,30 @@
 "use client"
 
-import { useTransition } from "react";
+import { useTransition, useEffect, useState } from "react";
 import { useFormState } from 'react-dom';
-import Link from 'next/link';
-import { signUpCredentials } from "@/lib/action";
+import { useRouter } from "next/navigation";
+import { Link } from "@/lib/i18n/navigation"
+import { signUpCredentials } from "@/features/auth/action";
 import { RegisterButton } from '@/components/ui/button';
-import { useState } from "react";
 
 const formRegister = () => {
   const [state, formAction] = useFormState(signUpCredentials, null);
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useEffect(() => {
+    if (
+        state?.success &&
+        state?.redirectTo
+    ) {
+        router.push(
+        state.redirectTo
+        );
+    }
+    }, [state, router]);
   
   return (
     <div>
@@ -38,6 +51,13 @@ const formRegister = () => {
             <input type="email" name="email" placeholder="example@gmail.com" className='bg-gray-50 border border-gray-300 text-gray-900 rounded-[15px] w-full p-2.5' />
             <div aria-live='polite' aria-atomic='true'>
                 <span className='text-sm text-red-500 mt-2'>{state?.error?.email}</span>
+            </div>
+        </div>
+        <div>
+            <label htmlFor="phone" className='block mb-2 text-sm font-medium text-white'>Phone Number</label>
+            <input type="text" name="phone" placeholder="08123456789" className='bg-gray-50 border border-gray-300 text-gray-900 rounded-[15px] w-full p-2.5' />
+            <div aria-live='polite' aria-atomic='true'>
+                <span className='text-sm text-red-500 mt-2'>{state?.error?.phone}</span>
             </div>
         </div>
         <div className="relative">

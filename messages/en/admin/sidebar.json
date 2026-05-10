@@ -1,0 +1,17 @@
+{
+  "title": "Admin Panel",
+
+  "menu": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "category": "Category",
+    "certification": "Certification",
+    "testimonial": "Testimonial"
+  },
+
+  "language": "Language",
+
+  "buttons": {
+    "logout": "Sign Out"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "page": {
+    "title": "Testimonial Management",
+    "subtitle": "Manage and monitor all testimonials in your system",
+    "metadata": {
+      "title": "Testimonial Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "Testimonial List",
+    "subtitle": "Total {count} testimonials"
+  },
+
+  "search": {
+    "placeholder": "Search testimonial..."
+  },
+
+  "table": {
+    "no": "No",
+    "user": "User",
+    "testimonial": "Testimonial",
+    "status": "Status",
+    "actions": "Actions"
+  },
+
+  "buttons": {
+    "visible": "Visible",
+    "hidden": "Hidden"
+  },
+
+  "toast": {
+    "updateSuccess": "Testimonial status updated successfully",
+    "updateFailed": "Failed to update testimonial status"
+  },
+
+  "empty": {
+    "title": "No testimonials found"
+  },
+
+  "footer": {
+    "showing": "Showing {count} testimonials"
+  }
+}

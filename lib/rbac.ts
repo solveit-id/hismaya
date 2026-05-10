@@ -1,11 +1,12 @@
 export const ROLES = {
-  ADMIN: "admin",
-  USER: "user",
+  ADMIN: "ADMIN",
+  USER: "USER",
 } as const;
 
-export type Role = (typeof ROLES)[keyof typeof ROLES];
+export type Role =
+  (typeof ROLES)[keyof typeof ROLES];
 
 export const roleAccessMap: Record<Role, string[]> = {
-  admin: ["/admin"],
-  user: ["/user"],
+  ADMIN: ["/admin"],
+  USER: ["/user"],
 };

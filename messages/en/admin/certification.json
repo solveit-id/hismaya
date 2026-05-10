@@ -1,0 +1,103 @@
+{
+  "page": {
+    "title": "Certification Management",
+    "subtitle": "Manage and monitor all certifications in your system",
+    "metadata": {
+      "title": "Certification Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "Certification List",
+    "subtitle": "Total: {count} certifications"
+  },
+
+  "search": {
+    "placeholder": "Search certification..."
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Certification Name",
+    "description": "Description",
+    "category": "Category",
+    "duration": "Duration",
+    "price": "Price",
+    "status": "Status",
+    "actions": "Actions",
+    "created": "Created at:",
+    "createdBy": "Created by:"
+  },
+
+  "buttons": {
+    "add": "Add Certification",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
+    "loading": "Loading..."
+  },
+
+  "empty": {
+    "title": "No certifications data found"
+  },
+
+  "footer": {
+    "showing": "Showing {count} certifications"
+  },
+
+  "modal": {
+    "addTitle": "Add Certification",
+    "editTitle": "Edit Certification",
+
+    "addSubtitle": "Create new certification certification",
+    "editSubtitle": "Update certification information"
+  },
+
+  "delete": {
+    "title": "Delete Certification",
+    "subtitle": "This action cannot be undone.",
+    "confirmation": "Are you sure want to delete"
+  },
+
+  "form": {
+    "nameId": "Certification Name (ID)",
+    "nameEn": "Certification Name (EN)",
+
+    "category": "Category",
+    "selectCategory": "Select Category",
+
+    "durationId": "Duration (ID)",
+    "durationEn": "Duration (EN)",
+
+    "price": "Price",
+    "priceHint": "Empty if not in use",
+
+    "descId": "Description (ID)",
+    "descEn": "Description (EN)",
+
+    "status": "Status",
+
+    "placeholderName": "Example: Fullstack Developer",
+    "placeholderDurationId": "Example: 3 Bulan",
+    "placeholderDurationEn": "Example: 3 Months",
+    "placeholderDesc": "Certification description..."
+  },
+
+  "status": {
+    "active": "ACTIVE",
+    "inactive": "INACTIVE"
+  },
+
+  "toast": {
+    "createSuccess": "Certification created successfully",
+    "createFailed": "Failed to create certification",
+
+    "updateSuccess": "Certification updated successfully",
+    "updateFailed": "Failed to update certification",
+
+    "deleteSuccess": "Certification deleted successfully",
+    "deleteFailed": "Failed to delete certification"
+  }
+}

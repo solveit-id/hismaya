@@ -1,17 +1,29 @@
 import NextAuth from "next-auth";
+import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import Credentials from "next-auth/providers/credentials";
-import { SignInSchema } from "@/lib/zod";
 import { compare } from "bcrypt-ts";
-import Google from "next-auth/providers/google";
+import { SignInSchema } from "@/features/auth/schema";
+import { normalizePhone } from "@/lib/normalize-phone";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const {
+    handlers,
+    signIn,
+    signOut,
+    auth,
+} = NextAuth({
+
     adapter: PrismaAdapter(prisma),
 
     session: {
         strategy: "jwt",
-        maxAge: 60 * 60 * 24,
+
+        // 2 HOURS
+        maxAge: 60 * 60 * 2,
+
+        // REFRESH EVERY 15 MINUTES
+        updateAge: 60 * 15,
     },
 
     pages: {
@@ -19,59 +31,129 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     providers: [
+        // ======================
+        // GOOGLE
+        // ======================
         Google({
             clientId: process.env.AUTH_GOOGLE_ID,
             clientSecret: process.env.AUTH_GOOGLE_SECRET,
+
+            allowDangerousEmailAccountLinking: true,
         }),
 
+        // ======================
+        // CREDENTIALS
+        // ======================
         Credentials({
             credentials: {
-                email: {},
+                login: {},
                 password: {},
             },
 
             authorize: async (credentials) => {
-                const validatedFields = SignInSchema.safeParse(credentials);
-                if (!validatedFields.success) return null;
+                const validatedFields =
+                    SignInSchema.safeParse(credentials);
 
-                const { email, password } = validatedFields.data;
+                if (!validatedFields.success) {
+                    return null;
+                }
 
-                const user = await prisma.user.findUnique({
-                where: { email },
-                });
+                const {
+                    login,
+                    password,
+                } = validatedFields.data;
 
-                if (!user || !user.password) return null;
+                const sanitizedLogin =
+                    login.includes("@")
+                        ? login.toLowerCase().trim()
+                        : normalizePhone(login);
 
-                const passwordMatch = await compare(password, user.password);
-                if (!passwordMatch) return null;
+                const user =
+                    await prisma.user.findFirst({
+                        where: {
+                            OR: [
+                                {
+                                    email:
+                                        sanitizedLogin,
+                                },
+                                {
+                                    phone:
+                                        sanitizedLogin,
+                                },
+                            ],
+                        },
+                    });
 
-                return user;
+                if (!user || !user.password) {
+                    return null;
+                }
+
+                const passwordMatch =
+                    await compare(
+                        password,
+                        user.password
+                    );
+
+                if (!passwordMatch) {
+                    return null;
+                }
+
+                return {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    phone: user.phone,
+                    image: user.image,
+                };
             },
         }),
     ],
 
     callbacks: {
+        // ======================
+        // REDIRECT
+        // ======================
         async redirect({ url, baseUrl }) {
-            if (url.startsWith("/")) return `${baseUrl}${url}`;
-            if (url.startsWith(baseUrl)) return url;
+            if (url.startsWith("/")) {
+                return `${baseUrl}${url}`;
+            }
+
+            if (url.startsWith(baseUrl)) {
+                return url;
+            }
+
             return baseUrl;
         },
 
-        async signIn() {
-            return true;
-        },
-
-        jwt({ token, user }) {
+        // ======================
+        // JWT
+        // ======================
+        async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
-                token.role = user.role?.toLowerCase().trim() ?? "user";
+                token.role = user.role ?? "USER";
+
+                token.phone =
+                    user.phone ?? null;
             }
+
             return token;
         },
 
-        session({ session, token }) {
-            session.user.id = token.id as string;
-            session.user.role = (token.role as string) ?? "user";
+        // ======================
+        // SESSION
+        // ======================
+        async session({ session, token }) {
+            session.user.id =
+                token.id as string;
+
+            session.user.role =
+                token.role as string;
+
+            session.user.phone =
+                token.phone as string | null;
+
             return session;
         },
     },

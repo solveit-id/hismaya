@@ -1,0 +1,75 @@
+{
+  "page": {
+    "title": "Manajemen Kategori",
+    "subtitle": "Kelola dan pantau semua kategori dalam sistem",
+    "metadata": {
+      "title": "Manajemen Kategori | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Kategori",
+    "subtitle": "Total: {count} kategori"
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Nama Kategori",
+    "description": "Deskripsi",
+    "actions": "Aksi",
+    "created": "Dibuat pada:"
+  },
+
+  "buttons": {
+    "add": "Tambah Kategori",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "save": "Simpan",
+    "update": "Perbarui",
+    "cancel": "Batal"
+  },
+
+  "empty": {
+    "title": "Tidak ada data kategori"
+  },
+
+  "footer": {
+    "showing": "Menampilkan {count} kategori"
+  },
+
+  "modal": {
+    "addTitle": "Tambah Kategori",
+    "editTitle": "Edit Kategori",
+
+    "addSubtitle": "Buat kategori program baru",
+    "editSubtitle": "Perbarui informasi kategori"
+  },
+
+  "delete": {
+    "title": "Hapus Kategori",
+    "subtitle": "Tindakan ini tidak dapat dibatalkan.",
+    "confirmation": "Apakah Anda yakin ingin menghapus"
+  },
+
+  "form": {
+    "nameId": "Nama Kategori (Indonesia)",
+    "nameEn": "Nama Kategori (English)",
+
+    "descId": "Deskripsi (Indonesia)",
+    "descEn": "Deskripsi (English)",
+
+    "placeholderName": "Contoh: Cloud Computing",
+    "placeholderDesc": "Deskripsi kategori..."
+  },
+
+  "toast": {
+    "createSuccess": "Kategori berhasil dibuat",
+    "createFailed": "Gagal membuat kategori",
+
+    "updateSuccess": "Kategori berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui kategori",
+
+    "deleteSuccess": "Kategori berhasil dihapus",
+    "deleteFailed": "Gagal menghapus kategori"
+  }
+}

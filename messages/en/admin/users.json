@@ -1,0 +1,79 @@
+{
+  "page": {
+    "title": "User Management",
+    "subtitle": "Manage and monitor all users in your system",
+    "metadata": {
+      "title": "User Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "User List",
+    "subtitle": "Total: {count} users"
+  },
+
+  "table": {
+    "no": "No",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "role": "Role",
+    "actions": "Actions",
+    "created": "Created at:"
+  },
+
+  "buttons": {
+    "add": "Add User",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+
+  "empty": {
+    "title": "No users data found"
+  },
+
+  "footer": {
+    "showing": "Showing {count} users"
+  },
+
+  "modal": {
+    "addTitle": "Add User",
+    "editTitle": "Edit User",
+
+    "addSubtitle": "Create new user",
+    "editSubtitle": "Update user information"
+  },
+
+  "delete": {
+    "title": "Delete User",
+    "subtitle": "This action cannot be undone.",
+    "confirmation": "Are you sure want to delete"
+  },
+
+  "form": {
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "password": "Password",
+    "role": "Role"
+  },
+
+  "role": {
+    "admin": "ADMIN",
+    "user": "USER"
+  },
+
+  "toast": {
+    "createSuccess": "User created successfully",
+    "createFailed": "Failed to create user",
+
+    "updateSuccess": "User updated successfully",
+    "updateFailed": "Failed to update user",
+
+    "deleteSuccess": "User deleted successfully",
+    "deleteFailed": "Failed to delete user"
+  }
+}

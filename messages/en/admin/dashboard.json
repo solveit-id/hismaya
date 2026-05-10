@@ -1,0 +1,73 @@
+{
+  "page": {
+    "metadata": {
+      "title": "Dashboard | Hismaya Admin"
+    }
+  },
+
+  "header": {
+    "welcome": "Welcome back, {name}",
+    "subtitle": "Here’s what’s happening in your system today"
+  },
+
+  "cards": {
+    "totalUsers": {
+      "title": "Total Users",
+      "subtitle": "{total} admins registered"
+    },
+
+    "activeSessions": {
+      "title": "Active Sessions",
+      "subtitle": "Current authenticated sessions"
+    },
+
+    "certifications": {
+      "title": "Certifications",
+      "subtitle": "{total} active certifications"
+    },
+
+    "visibleTestimonials": {
+      "title": "Visible Testimonials",
+      "subtitle": "Public testimonials displayed"
+    }
+  },
+
+  "sections": {
+    "recentUsers": "Recent Users",
+    "systemInformation": "System Information",
+    "quickActions": "Quick Actions"
+  },
+
+  "system": {
+    "serverStatus": "Server Status",
+    "online": "Online",
+    "database": "Database",
+    "totalCategories": "Total Categories",
+    "inactiveCertifications": "Inactive Certifications",
+    "hiddenTestimonials": "Hidden Testimonials"
+  },
+
+  "topSections": {
+    "users": "Users",
+    "categories": "Categories",
+    "certifications": "Certifications",
+    "testimonials": "Testimonials"
+  },
+
+  "activities": {
+    "userRegistered": "registered",
+    "certificationCreated": "New certification created",
+    "testimonialSubmitted": "New testimonial submitted"
+  },
+
+  "empty": {
+    "noUsers": "No users found"
+  },
+
+  "quickActions": {
+    "addUser": "Add User",
+    "addCategory": "Add Category",
+    "addCertification": "Add Certification",
+    "viewTestimonial": "View Testimonials"
+  }
+}

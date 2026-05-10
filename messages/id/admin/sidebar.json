@@ -1,0 +1,17 @@
+{
+  "title": "Panel Admin",
+
+  "menu": {
+    "dashboard": "Beranda",
+    "users": "Pengguna",
+    "category": "Kategori",
+    "certification": "Sertifikasi",
+    "testimonial": "Testimoni"
+  },
+
+  "language": "Bahasa",
+
+  "buttons": {
+    "logout": "Keluar"
+  }
+}

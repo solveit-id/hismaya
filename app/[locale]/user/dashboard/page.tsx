@@ -1,44 +1,44 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import AboutUs from "@/components/layout/user/about/about-us";
+import Hero from "@/components/layout/user/hero/hero";
+import PartnerLogos from "@/components/layout/user/partner/partner-logos";
+import OurService from "@/components/layout/user/service/our-service";
+// import Navbar from "@/components/layout/user/navbar/navbar";
+import CertificationProgram from "@/components/layout/user/certification/certification-program";
+import BundlingPackage from "@/components/layout/user/certification/bundling-package";
+import Testimonials from "@/components/layout/user/testimonial/testimonials";
+import CollaborationCta from "@/components/layout/user/cta/collaboration-cta";
+// import Footer from "@/components/layout/user/footer/footer";
+import FloatingWhatsapp from "@/components/layout/user/whatsapp/floating-whatsapp";
 
-export default async function UserDashboardPage() {
 
-  const session = await auth();
-
-  // BELUM LOGIN
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  // BUKAN USER
-  if (session.user.role !== "USER") {
-    redirect("/admin/dashboard");
-  }
-
+export default function Home() {
   return (
-    <div className="p-6 space-y-6">
+    <div>
+        {/* <Navbar /> */}
+        <Hero />
+        <PartnerLogos />
+        <div id="about">
+        <AboutUs />
+        </div>
+        <div id="service">
+        <OurService />
+        </div>
+        <div id="certification">
+        <CertificationProgram />
+        </div>
+        <div id="bundling">
+        <BundlingPackage />
+        </div>
+        {/* <div id="testimonials">
+        <Testimonials />
+        </div> */}
+        <div id="collaboration">
+        <CollaborationCta />
+        </div>
+        {/* <Footer /> */}
 
-      <h1 className="text-2xl font-bold">
-        User Dashboard
-      </h1>
-
-      <div className="bg-white shadow p-4 rounded">
-        <h2 className="font-semibold mb-2">
-          Session Info
-        </h2>
-
-        <p>
-          <b>ID:</b> {session.user.id}
-        </p>
-
-        <p>
-          <b>Email:</b> {session.user.email}
-        </p>
-
-        <p>
-          <b>Role:</b> {session.user.role}
-        </p>
-      </div>
+        
+        <FloatingWhatsapp />
 
     </div>
   );

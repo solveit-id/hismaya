@@ -11,9 +11,13 @@ import {
   useTranslations,
   useLocale,
 } from "next-intl";
+import type { AuthState } from "@/features/auth";
 
 const formLogin = () => {
-  const [state, formAction] = useFormState(signInCredentials, {});
+  const [state, formAction] = useFormState<AuthState, FormData>(
+    signInCredentials,
+    {}
+  );
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const t = useTranslations("auth.login");

@@ -8,11 +8,18 @@ import { AuthError } from "next-auth";
 import { normalizePhone } from "@/lib/normalize-phone";
 import { defaultLocale } from "@/lib/i18n/config";
 
-type AuthState = {
+export type AuthState = {
   success?: boolean;
   redirectTo?: string;
-  toastType?: string;
-  error?: any;
+  toastType?:
+  | "success"
+  | "failed"
+  | "invalid_credentials"
+  | "already_exists"
+  | "password_mismatch"
+  | "something_wrong";
+  message?: string | null;
+  error?: Record<string, string[]>;
 };
 
 export const signInCredentials = async (

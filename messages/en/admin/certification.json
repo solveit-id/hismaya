@@ -18,8 +18,10 @@
 
   "table": {
     "no": "No",
+    "image": "Image",
     "name": "Certification Name",
     "description": "Description",
+    "sector": "Sector",
     "category": "Category",
     "duration": "Duration",
     "price": "Price",
@@ -62,8 +64,13 @@
   },
 
   "form": {
+    "image": "Upload Image",
+
     "nameId": "Certification Name (ID)",
     "nameEn": "Certification Name (EN)",
+
+    "sectorId": "Sector (ID)",
+    "sectorEn": "Sector (EN)",
 
     "category": "Category",
     "selectCategory": "Select Category",

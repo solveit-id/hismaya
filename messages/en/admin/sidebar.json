@@ -4,6 +4,12 @@
   "menu": {
     "dashboard": "Dashboard",
     "users": "Users",
+    "userPages": {
+      "title": "User Pages",
+      "aboutUs": "About Us",
+      "ourServices": "Our Services",
+      "bundlingPackage": "Bundling Packages"
+    },
     "category": "Category",
     "certification": "Certification",
     "testimonial": "Testimonial"
@@ -12,6 +18,6 @@
   "language": "Language",
 
   "buttons": {
-    "logout": "Sign Out"
+    "logout": "Logout"
   }
 }

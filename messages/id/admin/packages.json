@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "Manajemen Halaman Paket",
+    "subtitle": "Kelola data halaman paket website",
+    "metadata": {
+      "title": "Manajemen Halaman Paket | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Data Halaman Paket",
+    "subtitle": "Total: {count} data"
+  },
+
+  "table": {
+    "no": "No",
+    "title": "Judul",
+    "subtitle": "Sub Judul",
+    "shortDesc": "Deskripsi Pendek",
+    "longDesc": "Deskripsi Lengkap",
+    "actions": "Aksi"
+  },
+
+  "buttons": {
+    "edit": "Edit",
+    "update": "Perbarui",
+    "cancel": "Batal"
+  },
+
+  "modal": {
+    "editTitle": "Edit Data Halaman Paket",
+    "editSubtitle": "Perbarui data"
+  },
+
+  "form": {
+    "titleId": "Judul (ID)",
+    "titleEn": "Judul (EN)",
+
+    "subtitleId": "Sub Judul (ID)",
+    "subtitleEn": "Sub Judul (EN)",
+
+    "shortDescId": "Deskripsi Pendek (ID)",
+    "shortDescEn": "Deskripsi Pendek (EN)",
+
+    "longDescId": "Deskripsi Lengkap (ID)",
+    "longDescEn": "Deskripsi Lengkap (EN)"
+  },
+
+  "toast": {
+    "updateSuccess": "Data halaman paket berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui data halaman paket"
+  }
+}

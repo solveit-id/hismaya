@@ -1,7 +1,8 @@
 {
   "idleSession": {
     "title": "Sesi Akan Berakhir",
-    "description": "Sesi Anda akan berakhir dalam {seconds} detik karena tidak ada aktivitas.",
+    "description": "Sesi Anda akan berakhir dalam {descriptionText} karena tidak ada aktivitas.",
+    "descriptionText": "{remaining} detik",
     "logout": "Keluar",
     "stay": "Tetap Login"
   }

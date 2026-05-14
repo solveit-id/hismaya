@@ -1,0 +1,73 @@
+{
+  "title": {
+    "first": "Tingkatkan",
+    "highlightOne": "Kompetensi",
+    "middle": "Raih",
+    "highlightTwo": "Karier",
+    "last": "Profesional"
+  },
+
+  "description": "Meningkatkan kompetensi melalui pelatihan dan sertifikasi profesional terpercaya",
+
+  "button": {
+    "learn": "Pelajari",
+    "search": "Temukan"
+  },
+
+  "filter": {
+    "category": {
+      "label": "Kategori",
+      "placeholder": "Pilih Kategori",
+      "items": {
+        "national": "Nasional",
+        "international": "Internasional",
+        "iso": "ISO"
+      }
+    },
+
+    "sector": {
+      "label": "Bidang",
+      "placeholder": "Pilih Bidang",
+
+      "national": [
+        "K3",
+        "ADMINISTRASI, SDM & MANAJEMEN",
+        "SERTIFIKASI MEDIA, PUBLIKASI, KREATIF & PENYIARAN",
+        "Sertifikasi Metodologi Pelatihan"
+      ],
+
+      "international": [
+        "CPSP (Certified Public Speaking Professional)",
+        "CCSP (Certified Customer Service Professional)",
+        "Financial Planning Level Basic (RFA)",
+        "CPHRM (Certified Professional Human Resource Management)",
+        "Manajemen Pendidikan",
+        "Manajemen Mutu",
+        "Manajemen Risiko"
+      ],
+
+      "iso": [
+        "ISO 9001",
+        "ISO 14001",
+        "ISO 27001"
+      ]
+    },
+
+    "duration": {
+      "label": "Durasi",
+      "placeholder": "Pilih Durasi",
+
+      "items": [
+        "1 Hari",
+        "2 Hari",
+        "3 Hari",
+        "4 Hari",
+        "5 Hari",
+        "1 Minggu",
+        "2 Minggu"
+      ]
+    }
+  },
+
+  "imageAlt": "Ilustrasi pengembangan kompetensi profesional"
+}

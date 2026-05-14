@@ -1,19 +1,37 @@
-import Sidebar from "@/components/layout/admin/sidebar"
-import { auth, signOut } from "@/auth"
+import Sidebar from "@/components/admin/sidebar/sidebar"
+
+import {
+  auth,
+  signOut,
+} from "@/auth"
+
 import { redirect } from "next/navigation"
 
 export default async function AdminLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+
+  params: {
+    locale: string
+  }
 }) {
-  const session = await auth()
+
+  const session =
+    await auth();
 
   async function handleLogout() {
+
     "use server"
 
-    await signOut({ redirect: false })
-    redirect("/")
+    await signOut({
+      redirect: false,
+    });
+
+    redirect(
+      `/${params.locale}`
+    );
   }
 
   return (
@@ -21,7 +39,11 @@ export default async function AdminLayout({
 
       {/* Sidebar */}
       {session && (
-        <Sidebar logoutAction={handleLogout} />
+        <Sidebar
+          logoutAction={
+            handleLogout
+          }
+        />
       )}
 
       {/* Content */}
@@ -30,5 +52,5 @@ export default async function AdminLayout({
       </main>
 
     </div>
-  )
+  );
 }

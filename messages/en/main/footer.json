@@ -1,0 +1,56 @@
+{
+  "brand": {
+    "title": "HISMAYA",
+    "description": "Professional training and certification institution to improve your competencies and career development."
+  },
+
+  "home": {
+    "title": "Home",
+    "links": [
+      "Choose Category",
+      "Choose Field",
+      "Choose Duration"
+    ]
+  },
+
+  "about": {
+    "title": "About",
+    "links": [
+      "Who We Are",
+      "What We Do",
+      "How We Help",
+      "Creating Excellent Competencies"
+    ]
+  },
+
+  "services": {
+    "title": "Our Services",
+    "links": [
+      "National Competency Certification",
+      "International Certification",
+      "ISO Certification"
+    ]
+  },
+
+  "bundling": {
+    "title": "Bundling Packages",
+    "links": [
+      "Instructor Level IV + Public Speaking",
+      "Instructor Level IV + Excellent Service",
+      "Instructor Level IV + Public Speaking"
+    ]
+  },
+
+  "bottom": {
+    "copyright": "© Hismaya Cahaya Rahayu",
+    "supported": "Powered by Solveti.id"
+  },
+
+  "social": {
+    "whatsapp": "Whatsapp",
+    "email": "Email",
+    "instagram": "Instagram",
+    "emailSubject": "Certification Program Registration",
+    "emailBody": "Hello Admin, I would like to register for the certification program [fill in here]. Please provide further information."
+  }
+}

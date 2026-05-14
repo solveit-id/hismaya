@@ -84,40 +84,86 @@ model Category {
 }
 
 model Certification {
-  id          String   @id @default(cuid())
+  id          String                @id @default(cuid())
 
   name        Json
   desc        Json
 
+  sector      Json
   duration    Json
-  price       Float
-  status      CertificationStatus @default(ACTIVE)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  img         String?
+
+  price       Float
+  status      CertificationStatus  @default(ACTIVE)
+
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
 
   adminId     String
-  admin       User     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  admin       User                 @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category    Category             @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@map("certifications")
 }
 
 model Testimonial {
-  id          String   @id @default(cuid())
+  id           String              @id @default(cuid())
 
-  testimonial Json
-  status      TestimonialStatus @default(VISIBLE)
+  testimonial  Json
+  status       TestimonialStatus   @default(VISIBLE)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("testimonials")
+}
+
+model About {
+  id          String    @id @default(cuid())
+
+  part        Json
+  desc        Json
+
+  img         String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("abouts")
+}
+
+model Service {
+  id          String    @id @default(cuid())
+
+  part        Json
+  desc        Json
+
+  img         String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("services")
+}
+
+model Package {
+  id           String    @id @default(cuid())
+
+  title        Json
+  subtitle     Json
+  short_desc   Json
+  long_desc    Json
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("packages")
 }
 
 enum Role {

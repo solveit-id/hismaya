@@ -1,0 +1,41 @@
+{
+  "page": {
+    "title": "SELAMAT DATANG KEMBALI",
+    "subtitle": "Masuk ke akun Hismaya Anda",
+    "or": "Atau",
+    "metadata": {
+      "title": "Halaman Masuk Akun | Hismaya"
+    }
+  },
+
+  "form": {
+    "loginLabel": "Email atau Nomor Telepon",
+    "loginPlaceholder": "contoh@gmail.com / 08123456789",
+
+    "passwordLabel": "Kata Sandi",
+    "passwordPlaceholder": "********",
+
+    "submit": "Masuk",
+
+    "registerText": "Belum punya akun?",
+    "registerLink": "Daftar disini"
+  },
+
+  "button": {
+    "submit": "Masuk",
+    "loading": "Mengautentikasi...",
+
+    "google": "Masuk dengan Google"
+  },
+
+  "toast": {
+    "successTitle": "Berhasil Masuk",
+    "successDescription": "Selamat datang kembali ke akun Anda",
+
+    "invalidCredentialsTitle": "Gagal Masuk",
+    "invalidCredentialsDescription": "Email, nomor telepon, atau password salah",
+
+    "somethingWrongTitle": "Terjadi Kesalahan",
+    "somethingWrongDescription": "Silakan coba beberapa saat lagi"
+  }
+}

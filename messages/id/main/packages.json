@@ -1,0 +1,43 @@
+{
+  "badge": "Penawaran Spesial",
+
+  "title": "Paket <highlight>Bundling</highlight> Kami",
+
+  "cardLabel": "Paket Bundling",
+
+  "descriptionLabel": "Deskripsi Paket",
+
+  "detail": "Lihat Detail",
+
+  "close": "Tutup",
+
+  "back": "Kembali",
+
+  "register": "Daftar Sekarang",
+
+  "whatsappMessage": "Halo Admin, saya ingin mendaftar paket bundling \"{name}\". Mohon informasi lebih lanjut.",
+
+  "package1": {
+    "name": "INSTRUKTUR LEVEL IV + PUBLIC SPEAKING",
+
+    "description": "Paket pelatihan untuk meningkatkan kompetensi instruktur sekaligus kemampuan komunikasi, presentasi, dan penyampaian materi di depan audiens.",
+
+    "shortText": "Tingkatkan komunikasi dan kemampuan mengajar."
+  },
+
+  "package2": {
+    "name": "INSTRUKTUR LEVEL IV + PELAYANAN PRIMA",
+
+    "description": "Kombinasi pelatihan instruktur dan service excellence untuk membangun kemampuan mengajar yang profesional serta pelayanan yang responsif.",
+
+    "shortText": "Bangun pelayanan prima yang profesional."
+  },
+
+  "package3": {
+    "name": "INSTRUKTUR LEVEL IV + PUBLIC SPEAKING",
+
+    "description": "Program bundling untuk memperkuat keterampilan instruktur dalam memfasilitasi pembelajaran dan membangun kepercayaan diri saat berbicara.",
+
+    "shortText": "Perkuat public speaking dan rasa percaya diri."
+  }
+}

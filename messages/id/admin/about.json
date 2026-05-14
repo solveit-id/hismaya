@@ -1,0 +1,46 @@
+{
+  "page": {
+    "title": "Manajemen Halaman Tentang",
+    "subtitle": "Kelola data halaman tentang website",
+    "metadata": {
+      "title": "Manajemen Halaman Tentang | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Data Halaman Tentang",
+    "subtitle": "Total: {count} data"
+  },
+
+  "table": {
+    "no": "No",
+    "image": "Gambar",
+    "part": "Bagian",
+    "description": "Deskripsi",
+    "actions": "Aksi"
+  },
+
+  "buttons": {
+    "edit": "Edit",
+    "update": "Perbarui",
+    "cancel": "Batal"
+  },
+
+  "modal": {
+    "editTitle": "Edit Data Halaman Tentang",
+    "editSubtitle": "Perbarui data"
+  },
+
+  "form": {
+    "partId": "Bagian (ID)",
+    "partEn": "Bagian (EN)",
+    "descId": "Deskripsi (ID)",
+    "descEn": "Deskripsi (EN)",
+    "image": "Unggah Gambar"
+  },
+
+  "toast": {
+    "updateSuccess": "Data halaman tentang berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui data halaman tentang"
+  }
+}

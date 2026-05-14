@@ -4,6 +4,12 @@
   "menu": {
     "dashboard": "Beranda",
     "users": "Pengguna",
+    "userPages": {
+      "title": "Halaman Pengguna",
+      "aboutUs": "Tentang Kami",
+      "ourServices": "Layanan Kami",
+      "bundlingPackage": "Paket Bundling"
+    },
     "category": "Kategori",
     "certification": "Sertifikasi",
     "testimonial": "Testimoni"

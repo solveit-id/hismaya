@@ -1,0 +1,41 @@
+{
+  "page": {
+    "title": "WELCOME BACK",
+    "subtitle": "Login to your Hismaya account",
+    "or": "Or",
+    "metadata": {
+      "title": "Account Login Page | Hismaya"
+    }
+  },
+
+  "form": {
+    "loginLabel": "Email or Phone Number",
+    "loginPlaceholder": "example@gmail.com / 08123456789",
+
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "********",
+
+    "submit": "Login",
+
+    "registerText": "Don't have an account?",
+    "registerLink": "Register here"
+  },
+
+  "button": {
+    "submit": "Login",
+    "loading": "Authenticating...",
+
+    "google": "Login with Google"
+  },
+
+  "toast": {
+    "successTitle": "Login Successful",
+    "successDescription": "Welcome back to your account",
+
+    "invalidCredentialsTitle": "Login Failed",
+    "invalidCredentialsDescription": "Email, phone number, or password is incorrect",
+
+    "somethingWrongTitle": "Something Went Wrong",
+    "somethingWrongDescription": "Please try again later"
+  }
+}

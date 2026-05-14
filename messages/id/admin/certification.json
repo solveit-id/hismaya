@@ -18,8 +18,10 @@
 
   "table": {
     "no": "No",
+    "image": "Gambar",
     "name": "Nama Sertifikasi",
     "description": "Deskripsi",
+    "sector": "Bidang",
     "category": "Kategori",
     "duration": "Durasi",
     "price": "Harga",
@@ -62,8 +64,13 @@
   },
 
   "form": {
+    "image": "Unggah Gambar",
+
     "nameId": "Nama Sertifikasi (ID)",
     "nameEn": "Nama Sertifikasi (EN)",
+
+    "sectorId": "Bidang (ID)",
+    "sectorEn": "Bidang (EN)",
 
     "category": "Kategori",
     "selectCategory": "Pilih Kategori",

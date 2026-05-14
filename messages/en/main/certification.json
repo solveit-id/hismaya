@@ -1,0 +1,38 @@
+{
+  "sectionBadge": "Certification Program List",
+  "sectionTitle": "Certification",
+  "sectionHighlight": "Programs",
+  "viewAllButton": "View All Certifications",
+
+  "page": {
+    "badge": "All Certification Programs",
+    "title": "Certification <highlight>Programs</highlight>",
+    "badgeIso": "ISO Certification Programs",
+    "titleIso": "<highlight>ISO</highlight> Certification",
+    "emptyIso": "ISO certification programs are not available yet."
+  },
+
+  "filters": {
+    "category": "Category",
+    "allCategories": "Select Category",
+
+    "sector": "Sector",
+    "allSectors": "Select Sector",
+
+    "duration": "Duration",
+    "allDurations": "Select Duration",
+
+    "empty": "No certifications found for the selected filter.",
+
+    "find": "Find",
+    "reset": "Reset"
+  },
+
+  "popup": {
+    "category": "Category",
+    "duration": "Duration",
+    "description": "Description",
+    "register": "Register Now",
+    "detail": "View Detail"
+  }
+}

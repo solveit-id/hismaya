@@ -1,0 +1,50 @@
+{
+  "page": {
+    "title": "SELAMAT DATANG DI HISMAYA",
+    "subtitle": "Buat akun Hismaya baru",
+    "metadata": {
+      "title": "Halaman Daftar Akun | Hismaya"
+    }
+  },
+
+  "form": {
+    "nameLabel": "Nama",
+    "namePlaceholder": "Nama Lengkap",
+
+    "emailLabel": "Email",
+    "emailPlaceholder": "contoh@gmail.com",
+
+    "phoneLabel": "Nomor Telepon",
+    "phonePlaceholder": "08123456789",
+
+    "passwordLabel": "Kata Sandi",
+    "passwordPlaceholder": "********",
+
+    "confirmPasswordLabel": "Konfirmasi Kata Sandi",
+    "confirmPasswordPlaceholder": "********",
+
+    "submit": "Daftar",
+
+    "loginText": "Sudah punya akun?",
+    "loginLink": "Masuk"
+  },
+
+  "button": {
+    "submit": "Daftar",
+    "loading": "Mendaftarkan..."
+  },
+
+  "toast": {
+    "successTitle": "Registrasi Berhasil",
+    "successDescription": "Akun berhasil dibuat dan Anda telah masuk",
+
+    "alreadyExistsTitle": "Registrasi Gagal",
+    "alreadyExistsDescription": "Email atau nomor telepon sudah terdaftar",
+
+    "passwordMismatchTitle": "Password Tidak Cocok",
+    "passwordMismatchDescription": "Konfirmasi password harus sama",
+
+    "failedTitle": "Registrasi Gagal",
+    "failedDescription": "Terjadi kesalahan saat membuat akun"
+  }
+}

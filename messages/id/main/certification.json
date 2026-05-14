@@ -1,0 +1,38 @@
+{
+  "sectionBadge": "Daftar Program Sertifikasi",
+  "sectionTitle": "Daftar",
+  "sectionHighlight": "Sertifikasi",
+  "viewAllButton": "Lihat Semua Sertifikasi",
+
+  "page": {
+    "badge": "Semua Program Sertifikasi",
+    "title": "Daftar <highlight>Sertifikasi</highlight>",
+    "badgeIso": "Program Sertifikasi ISO",
+    "titleIso": "Sertifikasi <highlight>ISO</highlight>",
+    "emptyIso": "Program sertifikasi ISO belum tersedia."
+  },
+
+  "filters": {
+    "category": "Kategori",
+    "allCategories": "Pilih Kategori",
+
+    "sector": "Bidang",
+    "allSectors": "Pilih Bidang",
+
+    "duration": "Durasi",
+    "allDurations": "Pilih Durasi",
+
+    "empty": "Sertifikasi tidak ditemukan untuk filter yang dipilih.",
+
+    "find": "Temukan",
+    "reset": "Reset"
+  },
+
+  "popup": {
+    "category": "Kategori",
+    "duration": "Durasi",
+    "description": "Deskripsi",
+    "register": "Daftar Sekarang",
+    "detail": "Lihat Detail"
+  }
+}

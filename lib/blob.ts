@@ -1,5 +1,7 @@
 import { del, put } from "@vercel/blob";
 
+// Using Vercel Blob for Saving Image Data
+
 export async function uploadImage(
   file: File,
   folder: string

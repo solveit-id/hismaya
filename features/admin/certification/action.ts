@@ -12,6 +12,8 @@ import {
   deleteImage,
 } from "@/lib/blob"
 
+// Using Vercel Blob for Saving Image Data
+
 export const createCertification = async (
   formData: FormData
 ) => {

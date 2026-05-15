@@ -11,6 +11,8 @@ import {
   deleteImage,
 } from "@/lib/blob"
 
+// Using Vercel Blob for Saving Image Data
+
 export const updateService = async (
   id: string,
   formData: FormData

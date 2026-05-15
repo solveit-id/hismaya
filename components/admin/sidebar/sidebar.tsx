@@ -90,7 +90,7 @@ export default function Sidebar({
 
     {
       name: t("menu.users"),
-      href: "/admin/users",
+      href: "/admin/user",
       icon: <FiUsers />,
     },
 

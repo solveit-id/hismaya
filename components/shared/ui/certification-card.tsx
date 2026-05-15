@@ -39,7 +39,7 @@ export default function CertificationCard({
     useState(false);
 
   const whatsappNumber =
-    "6282335501778";
+    "6285933486769";
 
   const title = getTranslation(
     certification.name,

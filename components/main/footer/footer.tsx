@@ -28,7 +28,7 @@ export default function Footer() {
         {
             label: t("social.whatsapp"),
             icon: FaWhatsapp,
-            href: "https://wa.me/6281234567890",
+            href: "https://wa.me/6285933486769",
         },
         {
             label: t("social.email"),

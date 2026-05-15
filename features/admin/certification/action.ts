@@ -7,8 +7,10 @@ import { CertificationSchema } from "./schema"
 
 import { auth } from "@/auth"
 
-import path from "path"
-import fs from "fs/promises"
+import {
+  uploadImage,
+  deleteImage,
+} from "@/lib/blob"
 
 export const createCertification = async (
   formData: FormData
@@ -81,36 +83,10 @@ export const createCertification = async (
       typeof data.img !== "string" &&
       data.img.size > 0
     ) {
-      const bytes =
-        await data.img.arrayBuffer()
-
-      const buffer =
-        Buffer.from(bytes)
-
-      const fileName =
-        `${Date.now()}-${data.img.name}`
-
-      const uploadDir = path.join(
-        process.cwd(),
-        "public/uploads/certifications"
+      imagePath = await uploadImage(
+        data.img,
+        "certifications"
       )
-
-      await fs.mkdir(uploadDir, {
-        recursive: true,
-      })
-
-      const filePath = path.join(
-        uploadDir,
-        fileName
-      )
-
-      await fs.writeFile(
-        filePath,
-        buffer
-      )
-
-      imagePath =
-        `/uploads/certifications/${fileName}`
     }
 
     await prisma.certification.create({
@@ -154,9 +130,7 @@ export const createCertification = async (
       },
     })
 
-    revalidatePath(
-      "/admin/certification"
-    )
+    revalidatePath("/admin/certification", "page")
 
     return {
       success: true,
@@ -252,50 +226,16 @@ export const updateCertification =
         typeof data.img !== "string" &&
         data.img.size > 0
       ) {
-        const bytes =
-          await data.img.arrayBuffer()
-
-        const buffer =
-          Buffer.from(bytes)
-
-        const fileName =
-          `${Date.now()}-${data.img.name}`
-
-        const uploadDir = path.join(
-          process.cwd(),
-          "public/uploads/certifications"
-        )
-
-        await fs.mkdir(uploadDir, {
-          recursive: true,
-        })
-
-        const filePath = path.join(
-          uploadDir,
-          fileName
-        )
-
-        await fs.writeFile(
-          filePath,
-          buffer
-        )
-
         if (existingCertification?.img) {
-          const oldImagePath = path.join(
-            process.cwd(),
-            "public",
+          await deleteImage(
             existingCertification.img
           )
-
-          try {
-            await fs.unlink(oldImagePath)
-          } catch {
-            // ignore if file not found
-          }
         }
 
-        imagePath =
-          `/uploads/certifications/${fileName}`
+        imagePath = await uploadImage(
+          data.img,
+          "certifications"
+        )
       }
 
       await prisma.certification.update({
@@ -348,9 +288,7 @@ export const updateCertification =
         },
       })
 
-      revalidatePath(
-        "/admin/certification"
-      )
+      revalidatePath("/admin/certification", "page")
 
       return {
         success: true,
@@ -382,17 +320,9 @@ export const deleteCertification =
       // DELETE IMAGE FILE
       if (certification?.img) {
 
-        const imagePath = path.join(
-          process.cwd(),
-          "public",
+        await deleteImage(
           certification.img
         )
-
-        try {
-          await fs.unlink(imagePath)
-        } catch {
-          // ignore if file not found
-        }
       }
 
       // DELETE DATABASE
@@ -400,9 +330,7 @@ export const deleteCertification =
         where: { id },
       })
 
-      revalidatePath(
-        "/admin/certification"
-      )
+      revalidatePath("/admin/about", "page")
 
       return {
         success: true,

@@ -6,9 +6,10 @@ import { revalidatePath } from "next/cache"
 
 import { ServiceSchema } from "./schema"
 
-import path from "path"
-
-import fs from "fs/promises"
+import {
+  uploadImage,
+  deleteImage,
+} from "@/lib/blob"
 
 export const updateService = async (
   id: string,
@@ -63,53 +64,16 @@ export const updateService = async (
       typeof data.img !== "string" &&
       data.img.size > 0
     ) {
-
-      const bytes =
-        await data.img.arrayBuffer()
-
-      const buffer =
-        Buffer.from(bytes)
-
-      const fileName =
-        `${Date.now()}-${data.img.name}`
-
-      const uploadDir = path.join(
-        process.cwd(),
-        "public/uploads/services"
-      )
-
-      await fs.mkdir(uploadDir, {
-        recursive: true,
-      })
-
       if (existingService?.img) {
-
-        const oldImagePath =
-          path.join(
-            process.cwd(),
-            "public",
-            existingService.img
-          )
-
-        try {
-          await fs.unlink(
-            oldImagePath
-          )
-        } catch {}
+        await deleteImage(
+          existingService.img
+        )
       }
 
-      const filePath = path.join(
-        uploadDir,
-        fileName
+      imagePath = await uploadImage(
+        data.img,
+        "services"
       )
-
-      await fs.writeFile(
-        filePath,
-        buffer
-      )
-
-      imagePath =
-        `/uploads/services/${fileName}`
     }
 
     await prisma.service.update({
@@ -135,7 +99,7 @@ export const updateService = async (
       },
     })
 
-    revalidatePath("/admin/service")
+    revalidatePath("/admin/service", "page")
 
     return {
       success: true,

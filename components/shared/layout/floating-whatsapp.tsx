@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function FloatingWhatsapp() {
   const [open, setOpen] = useState(false);
 
-  const phoneNumber = "6281234567890";
+  const phoneNumber = "6285933486769";
 
   const message = encodeURIComponent(
     "Halo admin, saya ingin bertanya mengenai pelatihan dan sertifikasi."

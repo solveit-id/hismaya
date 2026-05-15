@@ -8,7 +8,6 @@ import { AuthError } from "next-auth";
 import { normalizePhone } from "@/lib/normalize-phone";
 import { defaultLocale } from "@/lib/i18n/config";
 
-// fix this
 export type AuthState = {
   success?: boolean;
   redirectTo?: string;

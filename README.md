@@ -1,4 +1,6 @@
-🚀 Hismaya Cahaya Rahayu — A bilingual certification-services platform with public program discovery, secure user authentication, and centralized content administration.
+<h1 align="center"><b>🚀 Hismaya Cahaya Rahayu — A bilingual certification-services platform with public program discovery, secure user authentication, and centralized content administration.</b></h1>
+
+---
 
 ## 📌 Overview
 

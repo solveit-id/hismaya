@@ -1,173 +1,167 @@
-import { auth } from "@/auth"
-import { NextResponse } from "next/server"
+import createMiddleware from "next-intl/middleware";
 
-import {
-  roleAccessMap,
-  Role,
-} from "@/lib/rbac"
+import { NextResponse } from "next/server";
+
+import { auth } from "@/auth";
 
 import {
   defaultLocale,
   locales,
-} from "@/lib/i18n/config"
+} from "@/lib/i18n/config";
+
+import {
+  roleAccessMap,
+  Role,
+} from "@/lib/rbac";
+
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: "always",
+});
 
 export default auth((req) => {
+  const intlResponse = intlMiddleware(req);
 
-  const { nextUrl } = req
+  const { nextUrl } = req;
 
-  const pathname =
-    nextUrl.pathname
+  const pathname = nextUrl.pathname;
 
-  const isLoggedIn =
-    !!req.auth
+  const isLoggedIn = !!req.auth;
 
   const role =
     req.auth?.user?.role as
       | Role
-      | undefined
+      | undefined;
 
   // ======================
   // ROOT REDIRECT
   // ======================
-  if (pathname === "/") {
 
+  if (pathname === "/") {
     return NextResponse.redirect(
       new URL(
         `/${defaultLocale}`,
-        nextUrl
-      )
-    )
+        nextUrl,
+      ),
+    );
   }
 
   // ======================
-  // CHECK LOCALE
+  // LOCALE DETECTION
   // ======================
+
   const segments =
-    pathname.split("/")
+    pathname.split("/");
 
-  const locale =
-    locales.includes(
-      segments[1] as any
-    )
-      ? segments[1]
-      : null
+  const locale = locales.includes(
+    segments[1] as any,
+  )
+    ? segments[1]
+    : null;
 
-  // ======================
-  // INVALID / MISSING LOCALE
-  // ======================
   if (!locale) {
-
     return NextResponse.redirect(
       new URL(
         `/${defaultLocale}${pathname}`,
-        nextUrl
-      )
-    )
+        nextUrl,
+      ),
+    );
   }
 
-  // ======================
-  // REMOVE LOCALE
-  // ======================
-  const pathnameWithoutLocale =
+  const pathWithoutLocale =
     pathname.replace(
       `/${locale}`,
-      ""
-    ) || "/"
+      "",
+    ) || "/";
 
   // ======================
-  // AUTH PAGES
+  // AUTH ROUTES
   // ======================
+
   if (
-    pathnameWithoutLocale.startsWith(
-      "/login"
+    pathWithoutLocale.startsWith(
+      "/login",
     ) ||
-    pathnameWithoutLocale.startsWith(
-      "/register"
+    pathWithoutLocale.startsWith(
+      "/register",
     )
   ) {
-
     if (isLoggedIn && role) {
-
-      if (role === "ADMIN") {
-
-        return NextResponse.redirect(
-          new URL(
-            `/${locale}/admin/dashboard`,
-            nextUrl
-          )
-        )
-      }
+      const redirectPath =
+        role === "ADMIN"
+          ? `/${locale}/admin/dashboard`
+          : `/${locale}`;
 
       return NextResponse.redirect(
         new URL(
-          `/${locale}/user/dashboard`,
-          nextUrl
-        )
-      )
+          redirectPath,
+          nextUrl,
+        ),
+      );
     }
 
-    return NextResponse.next()
+    return intlResponse;
   }
 
   // ======================
-  // PRIVATE ROUTES
+  // ADMIN PROTECTION
   // ======================
+
   if (
-    pathnameWithoutLocale.startsWith(
-      "/admin"
-    ) ||
-    pathnameWithoutLocale.startsWith(
-      "/user"
+    pathWithoutLocale.startsWith(
+      "/admin",
     )
   ) {
-
-    if (!isLoggedIn || !role) {
-
+    if (
+      !isLoggedIn ||
+      role !== "ADMIN"
+    ) {
       return NextResponse.redirect(
         new URL(
           `/${locale}/login`,
-          nextUrl
-        )
-      )
+          nextUrl,
+        ),
+      );
     }
 
-    const allowedPaths =
-      roleAccessMap[role] || []
-
-    const isAllowed =
-      allowedPaths.some((path) =>
-        pathnameWithoutLocale.startsWith(
-          path
-        )
-      )
-
-    if (!isAllowed) {
-
-      if (role === "ADMIN") {
-
-        return NextResponse.redirect(
-          new URL(
-            `/${locale}/admin/dashboard`,
-            nextUrl
-          )
-        )
-      }
-
-      return NextResponse.redirect(
-        new URL(
-          `/${locale}/user/dashboard`,
-          nextUrl
-        )
-      )
-    }
+    return intlResponse;
   }
 
-  return NextResponse.next()
-})
+  // ======================
+  // USER ACTION GUARD
+  // ======================
+
+  const protectedActions = [
+    "/apply",
+    "/testimonial/create",
+    "/profile",
+  ];
+
+  const isProtectedAction =
+    protectedActions.some((p) =>
+      pathWithoutLocale.startsWith(
+        p,
+      ),
+    );
+
+  if (
+    isProtectedAction &&
+    !isLoggedIn
+  ) {
+    return NextResponse.redirect(
+      new URL(
+        `/${locale}/login`,
+        nextUrl,
+      ),
+    );
+  }
+
+  return intlResponse;
+});
 
 export const config = {
   matcher: [
-    "/",
     "/((?!api|_next|.*\\..*).*)",
   ],
-}
+};

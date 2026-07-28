@@ -1,19 +1,22 @@
-import type { Locale }
-  from "@/lib/i18n/config"
-
 export function getTranslation(
   field:
     | Record<string, string>
+    | string
     | null
     | undefined,
-  locale: Locale,
-  fallback: Locale = "id"
-) {
-  if (!field) return ""
+  locale: string
+): string {
+  if (!field) return "";
+
+  if (typeof field === "string") {
+    return field;
+  }
 
   return (
     field[locale] ||
-    field[fallback] ||
+    field.id ||
+    field.en ||
+    Object.values(field)[0] ||
     ""
-  )
+  );
 }

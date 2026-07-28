@@ -1,0 +1,46 @@
+{
+  "page": {
+    "title": "Manajemen Halaman Layanan",
+    "subtitle": "Kelola data halaman layanan website",
+    "metadata": {
+      "title": "Manajemen Halaman Layanan | Admin Hismaya"
+    }
+  },
+
+  "list": {
+    "title": "Daftar Data Halaman Layanan",
+    "subtitle": "Total: {count} data"
+  },
+
+  "table": {
+    "no": "No",
+    "image": "Gambar",
+    "part": "Bagian",
+    "description": "Deskripsi",
+    "actions": "Aksi"
+  },
+
+  "buttons": {
+    "edit": "Edit",
+    "update": "Perbarui",
+    "cancel": "Batal"
+  },
+
+  "modal": {
+    "editTitle": "Edit Data Halaman Layanan",
+    "editSubtitle": "Perbarui data"
+  },
+
+  "form": {
+    "partId": "Bagian (ID)",
+    "partEn": "Bagian (EN)",
+    "descId": "Deskripsi (ID)",
+    "descEn": "Deskripsi (EN)",
+    "image": "Unggah Gambar"
+  },
+
+  "toast": {
+    "updateSuccess": "Data halaman layanan berhasil diperbarui",
+    "updateFailed": "Gagal memperbarui data halaman layanan"
+  }
+}

@@ -1,63 +1,112 @@
-import { getRequestConfig } from "next-intl/server"
+import { getRequestConfig } from "next-intl/server";
 
 import {
   locales,
   defaultLocale,
-} from "@/lib/i18n/config"
+} from "@/lib/i18n/config";
 
-export default getRequestConfig(
-  async ({ locale }) => {
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
 
-    const activeLocale =
-      locale &&
-      locales.includes(locale as any)
-        ? locale
-        : defaultLocale
+  const activeLocale =
+    requested && locales.includes(requested as any)
+      ? requested
+      : defaultLocale;
 
-    const messages = {
-      admin: {
+  const messages = {
+    common: (
+      await import(`@/messages/${activeLocale}/common.json`)
+    ).default,
 
-        sidebar: (
-          await import(
-            `@/messages/${activeLocale}/admin/sidebar.json`
-          )
-        ).default,
+    auth: {
+      login: (
+        await import(`@/messages/${activeLocale}/auth/login.json`)
+      ).default,
 
-        dashboard: (
-          await import(
-            `@/messages/${activeLocale}/admin/dashboard.json`
-          )
-        ).default,
+      register: (
+        await import(`@/messages/${activeLocale}/auth/register.json`)
+      ).default,
+    },
 
-        users: (
-          await import(
-            `@/messages/${activeLocale}/admin/users.json`
-          )
-        ).default,
+    admin: {
+      sidebar: (
+        await import(`@/messages/${activeLocale}/admin/sidebar.json`)
+      ).default,
 
-        category: (
-          await import(
-            `@/messages/${activeLocale}/admin/category.json`
-          )
-        ).default,
+      dashboard: (
+        await import(`@/messages/${activeLocale}/admin/dashboard.json`)
+      ).default,
 
-        certification: (
-          await import(
-            `@/messages/${activeLocale}/admin/certification.json`
-          )
-        ).default,
+      user: (
+        await import(`@/messages/${activeLocale}/admin/user.json`)
+      ).default,
 
-        testimonial: (
-          await import(
-            `@/messages/${activeLocale}/admin/testimonial.json`
-          )
-        ).default,
-      },
-    }
+      about: (
+        await import(`@/messages/${activeLocale}/admin/about.json`)
+      ).default,
 
-    return {
-      locale: activeLocale,
-      messages,
-    }
-  }
-)
+      service: (
+        await import(`@/messages/${activeLocale}/admin/service.json`)
+      ).default,
+
+      package: (
+        await import(`@/messages/${activeLocale}/admin/packages.json`)
+      ).default,
+
+      category: (
+        await import(`@/messages/${activeLocale}/admin/category.json`)
+      ).default,
+
+      certification: (
+        await import(`@/messages/${activeLocale}/admin/certification.json`)
+      ).default,
+
+      testimonial: (
+        await import(`@/messages/${activeLocale}/admin/testimonial.json`)
+      ).default,
+    },
+
+    main: {
+      navbar: (
+        await import(`@/messages/${activeLocale}/main/navbar.json`)
+      ).default,
+      
+      hero: (
+        await import(`@/messages/${activeLocale}/main/hero.json`)
+      ).default,
+
+      partner: (
+        await import(`@/messages/${activeLocale}/main/partner.json`)
+      ).default,
+
+      about: (
+        await import(`@/messages/${activeLocale}/main/about.json`)
+      ).default,
+
+      service: (
+        await import(`@/messages/${activeLocale}/main/service.json`)
+      ).default,
+
+      certification: (
+        await import(`@/messages/${activeLocale}/main/certification.json`)
+      ).default,
+
+      package: (
+        await import(`@/messages/${activeLocale}/main/packages.json`)
+      ).default,
+
+      testimonial: (
+        await import(`@/messages/${activeLocale}/main/testimonial.json`)
+      ).default,
+
+      footer: (
+        await import(`@/messages/${activeLocale}/main/footer.json`)
+      ).default,
+    },
+  };
+
+  return {
+    locale: activeLocale,
+    messages,
+  };
+});

@@ -1,0 +1,46 @@
+{
+  "page": {
+    "title": "Service Page Management",
+    "subtitle": "Manage website service page data",
+    "metadata": {
+      "title": "Service Page Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "Service Page Data List",
+    "subtitle": "Total: {count} data"
+  },
+
+  "table": {
+    "no": "No",
+    "image": "Image",
+    "part": "Part",
+    "description": "Description",
+    "actions": "Actions"
+  },
+
+  "buttons": {
+    "edit": "Edit",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+
+  "modal": {
+    "editTitle": "Edit Service Page Data",
+    "editSubtitle": "Update data"
+  },
+
+  "form": {
+    "partId": "Part (ID)",
+    "partEn": "Part (EN)",
+    "descId": "Description (ID)",
+    "descEn": "Description (EN)",
+    "image": "Upload Image"
+  },
+
+  "toast": {
+    "updateSuccess": "Service page data updated successfully",
+    "updateFailed": "Failed to update service page data"
+  }
+}

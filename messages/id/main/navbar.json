@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "service": "Layanan",
+    "certification": "Sertifikasi",
+    "package": "Paket Bundling"
+  },
+  "auth": {
+    "login": "Masuk"
+  },
+  "userDropdown": {
+    "phone": "Nomor Telpon",
+    "logout": "Keluar"
+  }
+}

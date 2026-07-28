@@ -7,7 +7,7 @@ import {
 import { prisma } from "@/lib/prisma"
 
 import CategoryManagement
-  from "@/components/layout/admin/category-management"
+  from "@/components/admin/category/category-management"
 
 export async function generateMetadata({
   params,

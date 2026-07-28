@@ -7,7 +7,7 @@ import {
 import { prisma } from "@/lib/prisma"
 
 import CertificationManagement
-  from "@/components/layout/admin/certification-management"
+  from "@/components/admin/certification/certification-management"
 
 export async function generateMetadata({
   params,

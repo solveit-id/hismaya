@@ -1,0 +1,56 @@
+{
+  "brand": {
+    "title": "HISMAYA",
+    "description": "Lembaga profesional pelatihan dan sertifikasi untuk meningkatkan kompetensi dan pengembangan karier Anda."
+  },
+
+  "home": {
+    "title": "Beranda",
+    "links": [
+      "Pilih Kategori",
+      "Pilih Bidang",
+      "Pilih Durasi"
+    ]
+  },
+
+  "about": {
+    "title": "Tentang",
+    "links": [
+      "Siapa Kami",
+      "Apa yang Kami Lakukan",
+      "Bagaimana Kami Membantu",
+      "Menciptakan Kompetensi Unggul"
+    ]
+  },
+
+  "services": {
+    "title": "Layanan Kami",
+    "links": [
+      "Sertifikasi Kompetensi Nasional",
+      "Sertifikasi Internasional",
+      "Sertifikasi ISO"
+    ]
+  },
+
+  "bundling": {
+    "title": "Paket Bundling",
+    "links": [
+      "Instruktur Level IV + Public Speaking",
+      "Instruktur Level IV + Pelayanan Prima",
+      "Instruktur Level IV + Public Speaking"
+    ]
+  },
+
+  "bottom": {
+    "copyright": "© Hismaya Cahaya Rahayu",
+    "supported": "Di dukung oleh Solveti.id"
+  },
+
+  "social": {
+    "whatsapp": "Whatsapp",
+    "email": "Email",
+    "instagram": "Instagram",
+    "emailSubject": "Pendaftaran Program Sertifikasi",
+    "emailBody": "Halo Admin, saya ingin mendaftar program sertifikasi [isi sendiri]. Mohon informasi lebih lanjut."
+  }
+}

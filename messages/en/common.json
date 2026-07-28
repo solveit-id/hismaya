@@ -1,7 +1,8 @@
 {
   "idleSession": {
     "title": "Session Expiring",
-    "description": "Your session will expire in {seconds} seconds due to inactivity.",
+    "description": "Your session will expire in {descriptionText} due to inactivity.",
+    "descriptionText": "{remaining} seconds",
     "logout": "Logout",
     "stay": "Stay Logged In"
   }

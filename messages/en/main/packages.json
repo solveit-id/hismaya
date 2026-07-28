@@ -1,0 +1,43 @@
+{
+  "badge": "Special Offer",
+
+  "title": "Our <highlight>Bundling</highlight> Packages",
+
+  "cardLabel": "Bundling Package",
+
+  "descriptionLabel": "Package Description",
+
+  "detail": "View Detail",
+
+  "close": "Close",
+
+  "back": "Back",
+
+  "register": "Register Now",
+
+  "whatsappMessage": "Hello Admin, I would like to register for the bundling package \"{name}\". Please provide more information.",
+
+  "package1": {
+    "name": "INSTRUCTOR LEVEL IV + PUBLIC SPEAKING",
+
+    "description": "A training package designed to improve instructor competency along with communication, presentation, and public speaking skills.",
+
+    "shortText": "Improve communication and teaching skills."
+  },
+
+  "package2": {
+    "name": "INSTRUCTOR LEVEL IV + EXCELLENT SERVICE",
+
+    "description": "A combination of instructor and service excellence training to build professional teaching and responsive service skills.",
+
+    "shortText": "Build professional excellent service skills."
+  },
+
+  "package3": {
+    "name": "INSTRUCTOR LEVEL IV + PUBLIC SPEAKING",
+
+    "description": "A bundling program to strengthen instructor skills in facilitating learning and building confidence in public speaking.",
+
+    "shortText": "Strengthen public speaking and confidence."
+  }
+}

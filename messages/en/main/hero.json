@@ -1,0 +1,73 @@
+{
+  "title": {
+    "first": "Improve",
+    "highlightOne": "Competence",
+    "middle": "Achieve",
+    "highlightTwo": "Professional",
+    "last": "Career"
+  },
+
+  "description": "Improve competencies through trusted professional training and certification",
+
+  "button": {
+    "learn": "Learn More",
+    "search": "Discover"
+  },
+
+  "filter": {
+    "category": {
+      "label": "Category",
+      "placeholder": "Select Category",
+      "items": {
+        "national": "National",
+        "international": "International",
+        "iso": "ISO"
+      }
+    },
+
+    "sector": {
+      "label": "Field",
+      "placeholder": "Select Field",
+
+      "national": [
+        "Occupational Health & Safety",
+        "ADMINISTRATION, HR & MANAGEMENT",
+        "MEDIA, PUBLICATION, CREATIVE & BROADCAST CERTIFICATION",
+        "Training Methodology Certification"
+      ],
+
+      "international": [
+        "CPSP (Certified Public Speaking Professional)",
+        "CCSP (Certified Customer Service Professional)",
+        "Financial Planning Level Basic (RFA)",
+        "CPHRM (Certified Professional Human Resource Management)",
+        "Educational Management",
+        "Quality Management",
+        "Risk Management"
+      ],
+
+      "iso": [
+        "ISO 9001",
+        "ISO 14001",
+        "ISO 27001"
+      ]
+    },
+
+    "duration": {
+      "label": "Duration",
+      "placeholder": "Select Duration",
+
+      "items": [
+        "1 Day",
+        "2 Days",
+        "3 Days",
+        "4 Days",
+        "5 Days",
+        "1 Week",
+        "2 Weeks"
+      ]
+    }
+  },
+
+  "imageAlt": "Professional competency development illustration"
+}

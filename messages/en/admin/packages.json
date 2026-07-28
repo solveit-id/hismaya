@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "Package Page Management",
+    "subtitle": "Manage website package page data",
+    "metadata": {
+      "title": "Package Page Management | Hismaya Admin"
+    }
+  },
+
+  "list": {
+    "title": "Package Page Data List",
+    "subtitle": "Total: {count} data"
+  },
+
+  "table": {
+    "no": "No",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "shortDesc": "Short Description",
+    "longDesc": "Long Description",
+    "actions": "Actions"
+  },
+
+  "buttons": {
+    "edit": "Edit",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+
+  "modal": {
+    "editTitle": "Edit Package Page Data",
+    "editSubtitle": "Update data"
+  },
+
+  "form": {
+    "titleId": "Title (ID)",
+    "titleEn": "Title (EN)",
+
+    "subtitleId": "Subtitle (ID)",
+    "subtitleEn": "Subtitle (EN)",
+
+    "shortDescId": "Short Description (ID)",
+    "shortDescEn": "Short Description (EN)",
+
+    "longDescId": "Long Description (ID)",
+    "longDescEn": "Long Description (EN)"
+  },
+
+  "toast": {
+    "updateSuccess": "Package page data updated successfully",
+    "updateFailed": "Failed to update package page data"
+  }
+}

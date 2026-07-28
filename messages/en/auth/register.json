@@ -1,0 +1,50 @@
+{
+  "page": {
+    "title": "WELCOME TO HISMAYA",
+    "subtitle": "Create a new Hismaya account",
+    "metadata": {
+      "title": "Account Registration Page | Hismaya"
+    }
+  },
+
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Full Name",
+
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@gmail.com",
+
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "08123456789",
+
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "********",
+
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "********",
+
+    "submit": "Register",
+
+    "loginText": "Already have an account?",
+    "loginLink": "Login"
+  },
+
+  "button": {
+    "submit": "Register",
+    "loading": "Registering..."
+  },
+
+  "toast": {
+    "successTitle": "Registration Successful",
+    "successDescription": "Your account has been created successfully",
+
+    "alreadyExistsTitle": "Registration Failed",
+    "alreadyExistsDescription": "Email or phone number already registered",
+
+    "passwordMismatchTitle": "Password Mismatch",
+    "passwordMismatchDescription": "Password confirmation must match",
+
+    "failedTitle": "Registration Failed",
+    "failedDescription": "Failed to create your account"
+  }
+}

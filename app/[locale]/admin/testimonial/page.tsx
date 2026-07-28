@@ -6,7 +6,7 @@ import {
 
 import { prisma } from "@/lib/prisma"
 
-import TestimonialManagement from "@/components/layout/admin/testimonial-management"
+import TestimonialManagement from "@/components/admin/testimonial/testimonial-management"
 
 export async function generateMetadata({
   params,

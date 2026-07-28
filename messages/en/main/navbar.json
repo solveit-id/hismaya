@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "service": "Service",
+    "certification": "Certification",
+    "package": "Bundling Package"
+  },
+  "auth": {
+    "login": "Login"
+  },
+  "userDropdown": {
+    "phone": "Phone Number",
+    "logout": "Logout"
+  }
+}

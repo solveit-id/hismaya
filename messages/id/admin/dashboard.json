@@ -29,9 +29,33 @@
     "visibleTestimonials": {
       "title": "Testimonial Tampil",
       "subtitle": "Testimonial publik yang ditampilkan"
+    },
+    "sumvisitor": {
+      "title": "Total Pengguna",
+      "subtitle": "dari bulan lalu"
+    },
+    "visitortoday": {
+      "title": "Kunjungan Hari Ini",
+      "subtitle": "Diperbarui hari ini"
+    },
+    "unicvisitor": {
+      "title": "Pengunjung Unik",
+      "subtitle": "Berdasarkan perangkat pengunjung"
+    },
+    "growtraffic": {
+      "title": "Pertumbuhan Traffic",
+      "subtitle": "Dibandingkan bulan sebelumnya"
+    },
+    "statistiview": {
+      "title": "Statistik Kunjungan",
+      "subtitle": "Jumlah kunjungan website selama 7 hari terakhir"
+    },
+    "sourcevisitor": {
+      "title": "Sumber Kunjungan",
+      "subtitle": "Asal pengunjung website",
+      "description": "Pengunjung"
     }
   },
-
   "sections": {
     "recentUsers": "Pengguna Terbaru",
     "systemInformation": "Informasi Sistem",

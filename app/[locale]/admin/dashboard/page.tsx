@@ -1,12 +1,12 @@
-import { auth } from "@/auth"
-import { redirect } from "@/lib/i18n/navigation"
-import { prisma } from "@/lib/prisma"
+import { auth } from "@/auth";
+import { redirect } from "@/lib/i18n/navigation";
+import { prisma } from "@/lib/prisma";
 
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server";
 
-import Link from "next/link"
+import Link from "next/link";
 
 import {
   FiUsers,
@@ -17,62 +17,61 @@ import {
   FiUserCheck,
   FiBookOpen,
   FiMessageSquare,
-} from "react-icons/fi"
+  FiEye,
+  FiGlobe,
+  FiTrendingUp,
+} from "react-icons/fi";
 
 type Props = {
   params: Promise<{
-    locale: string
-  }>
-}
+    locale: string;
+  }>;
+};
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata> {
-  const { locale } = await params
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
 
   const t = await getTranslations({
     locale,
     namespace: "admin.dashboard",
-  })
+  });
 
   return {
     title: t("page.metadata.title"),
-  }
+  };
 }
 
-export default async function AdminDashboardPage({
-  params,
-}: Props) {
-  const { locale } = await params
+export default async function AdminDashboardPage({ params }: Props) {
+  const { locale } = await params;
 
   const t = await getTranslations({
     locale,
     namespace: "admin.dashboard",
-  })
+  });
 
   // =========================
   // AUTH
   // =========================
-  const session = await auth()
+  const session = await auth();
 
   if (!session?.user) {
     redirect({
       href: "/login",
       locale,
-    })
+    });
 
-    return null
+    return null;
   }
 
-  const user = session.user
+  const user = session.user;
 
   if (user.role !== "ADMIN") {
     redirect({
       href: "/user/dashboard",
       locale,
-    })
+    });
 
-    return null
+    return null;
   }
 
   // =========================
@@ -167,7 +166,7 @@ export default async function AdminDashboardPage({
         user: true,
       },
     }),
-  ])
+  ]);
 
   // =========================
   // TOP SECTIONS
@@ -189,16 +188,14 @@ export default async function AdminDashboardPage({
       name: t("topSections.testimonials"),
       hits: totalTestimonials,
     },
-  ]
+  ];
 
   // =========================
   // ACTIVITIES
   // =========================
   const activities = [
     ...recentUsers.map((recentUser) => ({
-      text: `${recentUser.name || "User"} ${t(
-        "activities.userRegistered"
-      )}`,
+      text: `${recentUser.name || "User"} ${t("activities.userRegistered")}`,
       time: recentUser.createdAt,
     })),
 
@@ -212,12 +209,51 @@ export default async function AdminDashboardPage({
       time: testimonial.createdAt,
     })),
   ]
-    .sort(
-      (a, b) =>
-        new Date(b.time).getTime() -
-        new Date(a.time).getTime()
-    )
-    .slice(0, 6)
+    .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+    .slice(0, 6);
+
+  // DUMMY DATA FOR TRACKING
+  const visitStatistics = {
+    totalVisits: 12480,
+    todayVisits: 328,
+    uniqueVisitors: 8964,
+    growth: 12.5,
+  };
+
+  const weeklyVisits = [
+    { day: "Sen", visits: 520 },
+    { day: "Sel", visits: 680 },
+    { day: "Rab", visits: 610 },
+    { day: "Kam", visits: 840 },
+    { day: "Jum", visits: 760 },
+    { day: "Sab", visits: 920 },
+    { day: "Min", visits: 810 },
+  ];
+
+  const trafficSources = [
+    {
+      source: "Direct",
+      visitors: 4280,
+      percentage: 42,
+    },
+    {
+      source: "Google Search",
+      visitors: 3150,
+      percentage: 31,
+    },
+    {
+      source: "Social Media",
+      visitors: 1740,
+      percentage: 17,
+    },
+    {
+      source: "Referral",
+      visitors: 1020,
+      percentage: 10,
+    },
+  ];
+
+  const maximumVisit = Math.max(...weeklyVisits.map((item) => item.visits));
 
   return (
     <div className="p-6 space-y-6">
@@ -229,9 +265,198 @@ export default async function AdminDashboardPage({
           })}
         </h1>
 
-        <p className="text-gray-500 text-sm">
-          {t("header.subtitle")}
-        </p>
+        <p className="text-gray-500 text-sm">{t("header.subtitle")}</p>
+      </div>
+      {/* VISITOR TRACKING */}
+      <div className="space-y-6">
+        {/* VISITOR SUMMARY */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {/* TOTAL VISITS */}
+          <div className="flex items-center justify-between rounded-[20px] bg-white p-5 shadow transition hover:shadow-md">
+            <div>
+              <p className="text-sm text-gray-500">
+                {t("cards.sumvisitor.title")}
+              </p>
+
+              <h2 className="mt-1 text-3xl font-bold text-gray-800">
+                {visitStatistics.totalVisits.toLocaleString(locale)}
+              </h2>
+
+              <p className="mt-2 flex items-center gap-1 text-xs text-green-600">
+                <FiTrendingUp size={13} />
+                {visitStatistics.growth}% {t("cards.sumvisitor.subtitle")}
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-cyan-100 p-3 text-cyan-600">
+              <FiEye size={20} />
+            </div>
+          </div>
+
+          {/* TODAY VISITS */}
+          <div className="flex items-center justify-between rounded-[20px] bg-white p-5 shadow transition hover:shadow-md">
+            <div>
+              <p className="text-sm text-gray-500">
+                {t("cards.visitortoday.title")}
+              </p>
+
+              <h2 className="mt-1 text-3xl font-bold text-blue-600">
+                {visitStatistics.todayVisits.toLocaleString(locale)}
+              </h2>
+
+              <p className="mt-2 text-xs text-gray-400">
+                {t("cards.visitortoday.subtitle")}
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-blue-100 p-3 text-blue-600">
+              <FiActivity size={20} />
+            </div>
+          </div>
+
+          {/* UNIQUE VISITORS */}
+          <div className="flex items-center justify-between rounded-[20px] bg-white p-5 shadow transition hover:shadow-md">
+            <div>
+              <p className="text-sm text-gray-500">
+                {t("cards.unicvisitor.title")}
+              </p>
+
+              <h2 className="mt-1 text-3xl font-bold text-purple-600">
+                {visitStatistics.uniqueVisitors.toLocaleString(locale)}
+              </h2>
+
+              <p className="mt-2 text-xs text-gray-400">
+                {t("cards.unicvisitor.subtitle")}
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-purple-100 p-3 text-purple-600">
+              <FiUsers size={20} />
+            </div>
+          </div>
+
+          {/* TRAFFIC GROWTH */}
+          <div className="flex items-center justify-between rounded-[20px] bg-white p-5 shadow transition hover:shadow-md">
+            <div>
+              <p className="text-sm text-gray-500">
+                {t("cards.growtraffic.title")}
+              </p>
+
+              <h2 className="mt-1 text-3xl font-bold text-green-600">
+                +{visitStatistics.growth}%
+              </h2>
+
+              <p className="mt-2 text-xs text-gray-400">
+                {t("cards.growtraffic.subtitle")}
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-green-100 p-3 text-green-600">
+              <FiTrendingUp size={20} />
+            </div>
+          </div>
+        </div>
+
+        {/* VISITOR DETAIL */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* WEEKLY VISITS */}
+          <div className="rounded-[20px] bg-white p-5 shadow lg:col-span-2">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+                  <span className="rounded-lg bg-cyan-100 p-2 text-cyan-600">
+                    <FiActivity size={18} />
+                  </span>
+                  {t("cards.statistiview.title")}
+                </h3>
+
+                <p className="mt-1 text-sm text-gray-400">
+                  {t("cards.statistiview.subtitle")}
+                </p>
+              </div>
+
+              <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600">
+                +{visitStatistics.growth}%
+              </span>
+            </div>
+
+            <div className="flex h-[260px] items-end justify-between gap-3 border-b border-gray-100 pb-4">
+              {weeklyVisits.map((item) => {
+                const barHeight = (item.visits / maximumVisit) * 100;
+
+                return (
+                  <div
+                    key={item.day}
+                    className="flex h-full flex-1 flex-col items-center justify-end gap-2"
+                  >
+                    <span className="text-xs font-medium text-gray-500">
+                      {item.visits}
+                    </span>
+
+                    <div className="flex h-[190px] w-full items-end justify-center">
+                      <div
+                        className="w-full max-w-[48px] rounded-t-lg bg-[#078fd3] transition-all duration-300 hover:bg-[#013f5e]"
+                        style={{
+                          height: `${barHeight}%`,
+                        }}
+                      />
+                    </div>
+
+                    <span className="text-xs text-gray-500">{item.day}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* TRAFFIC SOURCES */}
+          <div className="rounded-[20px] bg-white p-5 shadow">
+            <div className="mb-6">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+                <span className="rounded-lg bg-indigo-100 p-2 text-indigo-600">
+                  <FiGlobe size={18} />
+                </span>
+                {t("cards.sourcevisitor.title")}
+              </h3>
+
+              <p className="mt-1 text-sm text-gray-400">
+                {t("cards.sourcevisitor.subtitle")}
+              </p>
+            </div>
+
+            <div className="space-y-5">
+              {trafficSources.map((item) => (
+                <div key={item.source}>
+                  <div className="mb-2 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-700">
+                        {item.source}
+                      </p>
+
+                      <p className="text-xs text-gray-400">
+                        {item.visitors.toLocaleString(locale)}{" "}
+                        {t("cards.sourcevisitor.description")}
+                      </p>
+                    </div>
+
+                    <span className="text-sm font-semibold text-gray-600">
+                      {item.percentage}%
+                    </span>
+                  </div>
+
+                  <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+                    <div
+                      className="h-full rounded-full bg-[#078fd3]"
+                      style={{
+                        width: `${item.percentage}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* SUMMARY CARDS */}
@@ -349,9 +574,7 @@ export default async function AdminDashboardPage({
                       {recentUser.name || "Unnamed User"}
                     </p>
 
-                    <p className="text-sm text-gray-500">
-                      {recentUser.email}
-                    </p>
+                    <p className="text-sm text-gray-500">{recentUser.email}</p>
                   </div>
 
                   <div className="text-right">
@@ -360,17 +583,15 @@ export default async function AdminDashboardPage({
                     </span>
 
                     <p className="text-xs text-gray-400 mt-1">
-                      {new Date(
-                        recentUser.createdAt
-                      ).toLocaleDateString(locale)}
+                      {new Date(recentUser.createdAt).toLocaleDateString(
+                        locale,
+                      )}
                     </p>
                   </div>
                 </li>
               ))
             ) : (
-              <p className="text-sm text-gray-400">
-                {t("empty.noUsers")}
-              </p>
+              <p className="text-sm text-gray-400">{t("empty.noUsers")}</p>
             )}
           </ul>
         </div>
@@ -397,35 +618,25 @@ export default async function AdminDashboardPage({
             <div className="flex justify-between">
               <span>{t("system.database")}</span>
 
-              <span className="font-medium">
-                PostgreSQL
-              </span>
+              <span className="font-medium">PostgreSQL</span>
             </div>
 
             <div className="flex justify-between">
               <span>{t("system.totalCategories")}</span>
 
-              <span className="font-medium">
-                {totalCategories}
-              </span>
+              <span className="font-medium">{totalCategories}</span>
             </div>
 
             <div className="flex justify-between">
-              <span>
-                {t("system.inactiveCertifications")}
-              </span>
+              <span>{t("system.inactiveCertifications")}</span>
 
-              <span className="font-medium">
-                {inactiveCertifications}
-              </span>
+              <span className="font-medium">{inactiveCertifications}</span>
             </div>
 
             <div className="flex justify-between">
               <span>{t("system.hiddenTestimonials")}</span>
 
-              <span className="font-medium">
-                {hiddenTestimonials}
-              </span>
+              <span className="font-medium">{hiddenTestimonials}</span>
             </div>
           </div>
         </div>
@@ -482,5 +693,5 @@ export default async function AdminDashboardPage({
         </div>
       </div>
     </div>
-  )
+  );
 }

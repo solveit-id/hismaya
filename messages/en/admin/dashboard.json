@@ -29,6 +29,31 @@
     "visibleTestimonials": {
       "title": "Visible Testimonials",
       "subtitle": "Public testimonials displayed"
+    },
+    "sumvisitor": {
+      "title": "Total Visits",
+      "subtitle": "since last month"
+    },
+    "visitortoday": {
+      "title": "Today's Visit",
+      "subtitle": "Updated today"
+    },
+    "unicvisitor": {
+      "title": "Unique Visitors",
+      "subtitle": "Based on the visitor's device"
+    },
+    "growtraffic": {
+      "title": "Traffic Growth",
+      "subtitle": "Compared to last month"
+    },
+    "statistiview": {
+      "title": "Visit Statistics",
+      "subtitle": "Number of website visits in the last 7 days"
+    },
+    "sourcevisitor": {
+      "title": "Visit Source",
+      "subtitle": "Website visitor origin",
+      "description": "Visitor"
     }
   },
 

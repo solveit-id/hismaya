@@ -1,0 +1,79 @@
+{
+  "admin": {
+    "news": {
+      "page": {
+        "title": "News Management",
+        "description": "Add and manage Hismaya news content in Indonesian and English.",
+        "addButton": "Add News",
+        "emptyTitle": "News data will appear here",
+        "emptyDescription": "Once the backend API is available, this section can display the news list, publication status, and edit or delete actions.",
+        "addFirstButton": "Add the first news",
+        "success": "News data has been prepared successfully."
+      },
+      "modal": {
+        "title": "Add News",
+        "description": "Complete the news content in Indonesian and English.",
+        "closeLabel": "Close modal"
+      },
+      "form": {
+        "general": {
+          "title": "General Information",
+          "description": "Main information for managing and publishing the news.",
+          "categoryLabel": "News Category",
+          "categoryPlaceholder": "Select a category",
+          "authorLabel": "Author",
+          "authorPlaceholder": "Example: Hismaya Team",
+          "publishDateLabel": "Publication Date",
+          "statusLabel": "Status",
+          "draft": "Draft",
+          "published": "Publish"
+        },
+        "cover": {
+          "title": "News Cover",
+          "description": "Use a JPG, PNG, or WebP image with a maximum size of 2 MB.",
+          "chooseImage": "Choose news cover",
+          "changeImage": "Change image",
+          "fileInformation": "JPG, PNG, or WebP. Maximum 2 MB.",
+          "previewAlt": "News cover preview"
+        },
+        "indonesian": {
+          "title": "Indonesian Content",
+          "description": "This content will appear on the Indonesian version of the website.",
+          "titleLabel": "News Title (Indonesian)",
+          "titlePlaceholder": "Enter the Indonesian news title",
+          "excerptLabel": "News Summary (Indonesian)",
+          "excerptPlaceholder": "Enter the Indonesian news summary...",
+          "contentLabel": "News Content (Indonesian)",
+          "contentPlaceholder": "Enter the complete Indonesian news content..."
+        },
+        "english": {
+          "title": "English Content",
+          "description": "This content will appear on the English version of the website.",
+          "titleLabel": "News Title (English)",
+          "titlePlaceholder": "Enter the news title",
+          "excerptLabel": "News Summary (English)",
+          "excerptPlaceholder": "Enter a short news summary...",
+          "contentLabel": "News Content (English)",
+          "contentPlaceholder": "Enter the complete news content..."
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save News",
+          "saving": "Saving..."
+        }
+      },
+      "categories": {
+        "halalCertification": "Halal Certification",
+        "iso": "ISO",
+        "training": "Training",
+        "activity": "Activity"
+      },
+      "validation": {
+        "invalidImageFormat": "The image format must be JPG, PNG, or WebP.",
+        "maximumImageSize": "The maximum image size is 2 MB.",
+        "coverRequired": "A news cover image is required.",
+        "submitFailed": "The news could not be saved. Please try again."
+      }
+    }
+  }
+}

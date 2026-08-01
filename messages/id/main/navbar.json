@@ -4,7 +4,8 @@
     "about": "Tentang",
     "service": "Layanan",
     "certification": "Sertifikasi",
-    "package": "Paket Bundling"
+    "package": "Paket Bundling",
+    "news": "Berita"
   },
   "auth": {
     "login": "Masuk"

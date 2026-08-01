@@ -1,420 +1,150 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { useTranslations } from "next-intl";
 
-import {
-    FaWhatsapp,
-    FaInstagram,
-    FaEnvelope,
-} from "react-icons/fa6";
+import { FaWhatsapp, FaInstagram, FaEnvelope } from "react-icons/fa6";
 
 export default function Footer() {
+  const t = useTranslations("main.footer");
 
-    const t = useTranslations("main.footer");
+  const currentYear = new Date().getFullYear();
 
-    const pageLinks = t.raw("home.links") as string[];
+  const phoneNumber = "6285933486769";
+  const emailAddress = "hismayacahayarahayu@gmail.com";
 
-    const cmsLinks = t.raw("about.links") as string[];
+  const socialLinks = [
+    {
+      label: t("social.whatsapp"),
+      icon: FaWhatsapp,
+      href: `https://wa.me/${phoneNumber}`,
+    },
+    {
+      label: t("social.email"),
+      icon: FaEnvelope,
+      href: `mailto:${emailAddress}?subject=${encodeURIComponent(
+        t("social.emailSubject"),
+      )}&body=${encodeURIComponent(t("social.emailBody"))}`,
+    },
+    {
+      label: t("social.instagram"),
+      icon: FaInstagram,
+      href: "https://www.instagram.com/hismayacahayarahayu/",
+    },
+  ];
 
-    const utilityLinks = t.raw("services.links") as string[];
+  return (
+    <footer className="bg-white px-4 py-6 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1280px] border-y border-[#dfe3ea] bg-white px-6 py-10 sm:px-8 lg:px-12">
+        {/* KONTEN UTAMA */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1.15fr_1fr_0.75fr] lg:gap-14">
+          {/* BRAND */}
+          <div>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/img/hismayaaaa.png"
+                alt="Logo Hismaya"
+                width={30}
+                height={30}
+                className="h-7 w-7 object-contain"
+              />
 
-    const bundlingLinks = t.raw("bundling.links") as string[];
-
-    const socialLinks = [
-        {
-            label: t("social.whatsapp"),
-            icon: FaWhatsapp,
-            href: "https://wa.me/6285933486769",
-        },
-        {
-            label: t("social.email"),
-            icon: FaEnvelope,
-            href: `mailto:hismayacahayarahayu@gmail.com?subject=${encodeURIComponent(
-                t("social.emailSubject")
-            )}&body=${encodeURIComponent(
-                t("social.emailBody")
-            )}`,
-        },
-        {
-            label: t("social.instagram"),
-            icon: FaInstagram,
-            href: "https://www.instagram.com/hismayacahayarahayu/",
-        },
-    ];
-
-    const sectionRef = useRef<HTMLElement>(null);
-
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-
-        const currentSection = sectionRef.current;
-
-        if (!currentSection) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                }
-
-            },
-            {
-                threshold: 0.1,
-            }
-        );
-
-        observer.observe(currentSection);
-
-        return () => {
-            observer.disconnect();
-        };
-
-    }, []);
-
-    return (
-
-        <footer
-            ref={sectionRef}
-            className="
-                overflow-hidden
-                bg-[#f3f4f6]
-                px-6
-                pb-8
-                pt-20
-                text-[#667085]
-
-                sm:px-10
-                lg:px-16
-                xl:px-20
-            "
-        >
-            <div className="mx-auto max-w-[1280px]">
-
-                {/* TOP CONTENT */}
-                <div
-                    className="
-                        grid
-                        gap-y-14
-                        gap-x-12
-
-                        md:grid-cols-2
-
-                        lg:grid-cols-[220px_1fr_1fr_1fr]
-                        lg:items-start
-
-                        xl:grid-cols-[240px_1fr_1fr_1fr_320px]
-                    "
-                >
-
-                    {/* LOGO */}
-                    <div
-                        className={`
-                            transition-all
-                            duration-1000
-                            ${
-                                isVisible
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0"
-                            }
-                        `}
-                    >
-                        <div className="transition-transform duration-500 hover:scale-[1.03]">
-                            <Image
-                                src="/img/hismayaaaa.png"
-                                alt="Hismaya"
-                                width={72}
-                                height={72}
-                                className="h-auto w-[70px]"
-                            />
-                        </div>
-
-                        <h2 className="mt-5 text-[22px] font-extrabold text-[#1f2937]">
-                            {t("brand.title")}
-                        </h2>
-
-                        <p className="mt-4 max-w-[220px] text-[14px] leading-[1.8]">
-                            {t("brand.description")}
-                        </p>
-                    </div>
-
-                    {/* HOME */}
-                    <div
-                        className={`
-                            transition-all
-                            duration-[1200ms]
-                            ${
-                                isVisible
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0"
-                            }
-                        `}
-                        style={{
-                            transitionDelay: "120ms",
-                        }}
-                    >
-                        <h3 className="text-[17px] font-extrabold text-[#1f2937]">
-                            {t("home.title")}
-                        </h3>
-
-                        <div className="mt-6 grid grid-cols-2 gap-x-10">
-                            <ul className="space-y-4">
-                                {pageLinks.map((item) => (
-                                    <li key={item}>
-                                        <Link
-                                            href="#"
-                                            className="
-                                                inline-flex
-                                                text-[14px]
-                                                font-medium
-
-                                                transition-all
-                                                duration-300
-
-                                                hover:translate-x-1
-                                                hover:text-[#078fd3]
-                                            "
-                                        >
-                                            {item}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* ABOUT */}
-                    <div
-                        className={`
-                            transition-all
-                            duration-[1300ms]
-                            ${
-                                isVisible
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0"
-                            }
-                        `}
-                        style={{
-                            transitionDelay: "220ms",
-                        }}
-                    >
-                        <h3 className="text-[17px] font-extrabold text-[#1f2937]">
-                            {t("about.title")}
-                        </h3>
-
-                        <ul className="mt-6 space-y-4">
-                            {cmsLinks.map((item) => (
-                                <li key={item}>
-                                    <Link
-                                        href="/#about"
-                                        className="
-                                            inline-flex
-                                            text-[14px]
-                                            font-medium
-
-                                            transition-all
-                                            duration-300
-
-                                            hover:translate-x-1
-                                            hover:text-[#078fd3]
-                                        "
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* SERVICES */}
-                    <div
-                        className={`
-                            transition-all
-                            duration-[1400ms]
-                            ${
-                                isVisible
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0"
-                            }
-                        `}
-                        style={{
-                            transitionDelay: "320ms",
-                        }}
-                    >
-                        <h3 className="text-[17px] font-extrabold text-[#1f2937]">
-                            {t("services.title")}
-                        </h3>
-
-                        <ul className="mt-6 space-y-4">
-                            {utilityLinks.map((item) => (
-                                <li key={item}>
-                                    <Link
-                                        href="/#service"
-                                        className="
-                                            inline-flex
-                                            text-[14px]
-                                            font-medium
-
-                                            transition-all
-                                            duration-300
-
-                                            hover:translate-x-1
-                                            hover:text-[#078fd3]
-                                        "
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* BUNDLING */}
-                    <div
-                        className={`
-                            transition-all
-                            duration-[1200ms]
-                            ${
-                                isVisible
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0"
-                            }
-                        `}
-                        style={{
-                            transitionDelay: "120ms",
-                        }}
-                    >
-                        <h3 className="text-[17px] font-extrabold text-[#1f2937]">
-                            {t("bundling.title")}
-                        </h3>
-
-                        <ul className="mt-6 space-y-4">
-                            {bundlingLinks.map((item) => (
-                                <li key={item}>
-                                    <Link
-                                        href="/#bundling"
-                                        className="
-                                            inline-flex
-                                            text-[14px]
-                                            font-medium
-
-                                            transition-all
-                                            duration-300
-
-                                            hover:translate-x-1
-                                            hover:text-[#078fd3]
-                                        "
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
-                {/* DIVIDER */}
-                <div
-                    className={`
-                        mt-16
-                        h-px
-                        bg-[#d9dee7]
-
-                        origin-left
-                        transition-all
-                        duration-[1400ms]
-
-                        ${
-                            isVisible
-                                ? "scale-x-100 opacity-100"
-                                : "scale-x-0 opacity-0"
-                        }
-                    `}
-                />
-
-                {/* BOTTOM */}
-                <div
-                    className={`
-                        mt-8
-                        flex
-                        flex-col
-                        items-center
-                        justify-between
-                        gap-5
-
-                        text-center
-
-                        transition-all
-                        duration-[1600ms]
-
-                        md:flex-row
-                        md:text-left
-
-                        ${
-                            isVisible
-                                ? "translate-y-0 opacity-100"
-                                : "translate-y-8 opacity-0"
-                        }
-                    `}
-                    style={{
-                        transitionDelay: "520ms",
-                    }}
-                >
-                    <p className="text-[13px] font-medium">
-                        {t("bottom.copyright")}
-                    </p>
-
-                    <p className="text-[13px] font-medium text-[#98a2b3]">
-                        {t("bottom.supported")}
-                    </p>
-
-                    {/* SOCIAL */}
-                    <div className="flex items-center gap-3">
-                        {socialLinks.map(({ label, icon: Icon, href }, index) => (
-                            <Link
-                                key={label}
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={label}
-                                className="
-                                    flex
-                                    h-10
-                                    w-10
-                                    items-center
-                                    justify-center
-
-                                    rounded-full
-                                    border
-                                    border-[#dbe1ea]
-
-                                    bg-white
-                                    text-[#078fd3]
-
-                                    transition-all
-                                    duration-500
-
-                                    hover:-translate-y-1
-                                    hover:border-[#078fd3]
-                                    hover:bg-[#078fd3]
-                                    hover:text-white
-                                    hover:shadow-[0_12px_24px_rgba(7,143,211,0.22)]
-                                "
-                                style={{
-                                    transitionDelay: `${index * 70}ms`,
-                                }}
-                            >
-                                <Icon className="h-4 w-4" />
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+              <h2 className="text-[18px] font-semibold text-[#111827]">
+                {t("brand.name")}{" "}
+                <span className="text-[#2457ff]">{t("brand.highlight")}</span>
+              </h2>
             </div>
-        </footer>
-    );
+
+            <p className="mt-5 max-w-[330px] text-[14px] leading-[1.65] text-[#5f6b7a]">
+              {t("brand.description")}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-[16px] font-medium text-[#2457ff]">
+              {t("address.title")}
+            </h3>
+
+            <address className="mt-3 not-italic text-[14px] leading-6 text-[#667085]">
+              {t("address.line1")}
+              <br />
+              {t("address.line2")}
+              <br />
+              {t("address.line3")}
+            </address>
+          </div>
+
+          {/* KONTAK */}
+          <div>
+            <h3 className="text-[16px] font-medium text-[#2457ff]">
+              {t("contact.title")}
+            </h3>
+
+            <div className="mt-3 space-y-1 text-[14px] leading-6 text-[#667085]">
+              <Link
+                href={`https://wa.me/${phoneNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block transition-colors hover:text-[#2457ff]"
+              >
+                {t("contact.phone")}
+              </Link>
+
+              <Link
+                href={`mailto:${emailAddress}`}
+                className="block break-words transition-colors hover:text-[#2457ff]"
+              >
+                {t("contact.email")}
+              </Link>
+            </div>
+          </div>
+
+          {/* JAM OPERASIONAL */}
+          <div>
+            <h3 className="text-[16px] font-medium text-[#2457ff]">
+              {t("hours.title")}
+            </h3>
+
+            <div className="mt-3 text-[14px] leading-6 text-[#667085]">
+              <p>{t("hours.weekdays")}</p>
+              <p>{t("hours.weekdayTime")}</p>
+
+              <p className="mt-1">{t("hours.saturday")}</p>
+              <p>{t("hours.saturdayTime")}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* BAGIAN BAWAH */}
+        <div className="mt-8 flex flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
+          <p className="text-[13px] text-[#667085]">
+            <span className="font-medium text-[#2457ff]">
+              {t("bottom.brand", { year: currentYear })}
+            </span>
+            {", "}
+            {t("bottom.copyright")}
+          </p>
+
+          {/* MEDIA SOSIAL */}
+          <div className="flex items-center gap-5">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <Link
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                title={label}
+                className="text-[18px] text-[#536071] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2457ff]"
+              >
+                <Icon />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

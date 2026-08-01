@@ -18,9 +18,7 @@ const Navbar = async () => {
   const t = await getTranslations("main.navbar");
 
   const dashboardHref =
-    session?.user.role === "admin"
-      ? "/admin/dashboard"
-      : "/user/dashboard";
+    session?.user.role === "admin" ? "/admin/dashboard" : "/user/dashboard";
 
   const menuItems = [
     { label: t("menu.home"), href: "/#" },
@@ -28,12 +26,12 @@ const Navbar = async () => {
     { label: t("menu.service"), href: "/#service" },
     { label: t("menu.certification"), href: "/#certification" },
     { label: t("menu.package"), href: "/#bundling" },
+    { label: t("menu.news"), href: "/#news" },
   ];
 
   return (
     <header className="sticky top-0 z-[99999] border-b border-black/5 bg-[#E9E9E9]/95 backdrop-blur-md">
       <nav className="group mx-auto max-w-[1380px] px-5 sm:px-8 lg:px-10 xl:px-0">
-
         <input
           id="dashboard-navbar-toggle"
           type="checkbox"
@@ -41,9 +39,11 @@ const Navbar = async () => {
         />
 
         <div className="grid h-[76px] grid-cols-[80px_1fr_auto] items-center xl:grid-cols-[120px_1fr_auto]">
-
           {/* LOGO */}
-          <Link href={dashboardHref} className="flex items-center xl:justify-self-start">
+          <Link
+            href={dashboardHref}
+            className="flex items-center xl:justify-self-start"
+          >
             <Image
               src="/img/hismayaaaa.png"
               alt="Hismaya"
@@ -99,7 +99,10 @@ const Navbar = async () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeWidth={2} d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
+                <path
+                  strokeWidth={2}
+                  d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5"
+                />
               </svg>
 
               <svg
@@ -117,8 +120,9 @@ const Navbar = async () => {
         {/* MOBILE MENU */}
         <div className="hidden peer-checked:block xl:!hidden">
           <div className="mt-2 rounded-[20px] bg-white/90 p-4 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-md">
-
-            <div className={`${manropeBold.className} flex flex-col gap-3 border-t border-black/5 pt-4 text-[14px] text-[#555555]`}>
+            <div
+              className={`${manropeBold.className} flex flex-col gap-3 border-t border-black/5 pt-4 text-[14px] text-[#555555]`}
+            >
               {menuItems.map((item) => (
                 <ActiveNavLink
                   key={item.label}
@@ -147,10 +151,8 @@ const Navbar = async () => {
                 </Link>
               )}
             </div>
-
           </div>
         </div>
-
       </nav>
     </header>
   );

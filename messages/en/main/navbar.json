@@ -4,7 +4,8 @@
     "about": "About",
     "service": "Service",
     "certification": "Certification",
-    "package": "Bundling Package"
+    "package": "Bundling Package",
+    "news": "news"
   },
   "auth": {
     "login": "Login"

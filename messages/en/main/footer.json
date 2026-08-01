@@ -1,56 +1,36 @@
 {
   "brand": {
-    "title": "HISMAYA",
-    "description": "Professional training and certification institution to improve your competencies and career development."
+    "name": "Hismaya",
+    "highlight": "Cahaya Rahayu",
+    "description": "Hismaya Cahaya Rahayu provides professional services focused on quality, customer needs, and the best solutions for every service we deliver."
   },
-
-  "home": {
-    "title": "Home",
-    "links": [
-      "Choose Category",
-      "Choose Field",
-      "Choose Duration"
-    ]
+  "address": {
+    "title": "Address",
+    "line1": "Jl. Perum Gadang Regency No. P2 No. 44",
+    "line2": "Gadang, Malang City",
+    "line3": "East Java, Indonesia"
   },
-
-  "about": {
-    "title": "About",
-    "links": [
-      "Who We Are",
-      "What We Do",
-      "How We Help",
-      "Creating Excellent Competencies"
-    ]
+  "contact": {
+    "title": "Contact",
+    "phone": "+62 859-3348-6769",
+    "email": "hismayacahayarahayu@gmail.com"
   },
-
-  "services": {
-    "title": "Our Services",
-    "links": [
-      "National Competency Certification",
-      "International Certification",
-      "ISO Certification"
-    ]
+  "hours": {
+    "title": "Office Hours",
+    "weekdays": "Monday - Friday",
+    "weekdayTime": "08.00 - 16.00",
+    "saturday": "Saturday",
+    "saturdayTime": "08.00 - 12.00"
   },
-
-  "bundling": {
-    "title": "Bundling Packages",
-    "links": [
-      "Instructor Level IV + Public Speaking",
-      "Instructor Level IV + Excellent Service",
-      "Instructor Level IV + Public Speaking"
-    ]
-  },
-
   "bottom": {
-    "copyright": "© Hismaya Cahaya Rahayu",
-    "supported": "Powered by Solveti.id"
+    "brand": "Hismaya {year}",
+    "copyright": "all rights reserved."
   },
-
   "social": {
-    "whatsapp": "Whatsapp",
+    "whatsapp": "WhatsApp",
     "email": "Email",
     "instagram": "Instagram",
     "emailSubject": "Certification Program Registration",
-    "emailBody": "Hello Admin, I would like to register for the certification program [fill in here]. Please provide further information."
+    "emailBody": "Hello Admin, I would like to register for a certification program. Please provide further information."
   }
 }

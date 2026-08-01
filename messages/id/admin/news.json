@@ -1,0 +1,79 @@
+{
+  "admin": {
+    "news": {
+      "page": {
+        "title": "Kelola Berita",
+        "description": "Tambah dan kelola berita Hismaya dalam bahasa Indonesia dan Inggris.",
+        "addButton": "Tambah Berita",
+        "emptyTitle": "Data berita akan ditampilkan di sini",
+        "emptyDescription": "Setelah API backend tersedia, bagian ini dapat menampilkan daftar berita, status publikasi, serta tindakan edit dan hapus.",
+        "addFirstButton": "Tambah berita pertama",
+        "success": "Data berita berhasil disiapkan."
+      },
+      "modal": {
+        "title": "Tambah Berita",
+        "description": "Lengkapi berita dalam bahasa Indonesia dan bahasa Inggris.",
+        "closeLabel": "Tutup modal"
+      },
+      "form": {
+        "general": {
+          "title": "Informasi Umum",
+          "description": "Informasi utama untuk pengelolaan dan publikasi berita.",
+          "categoryLabel": "Kategori Berita",
+          "categoryPlaceholder": "Pilih kategori",
+          "authorLabel": "Penulis",
+          "authorPlaceholder": "Contoh: Tim Hismaya",
+          "publishDateLabel": "Tanggal Publikasi",
+          "statusLabel": "Status",
+          "draft": "Draft",
+          "published": "Publikasikan"
+        },
+        "cover": {
+          "title": "Cover Berita",
+          "description": "Gunakan gambar JPG, PNG, atau WebP dengan ukuran maksimal 2 MB.",
+          "chooseImage": "Pilih cover berita",
+          "changeImage": "Ganti gambar",
+          "fileInformation": "JPG, PNG, atau WebP. Maksimal 2 MB.",
+          "previewAlt": "Pratinjau cover berita"
+        },
+        "indonesian": {
+          "title": "Konten Bahasa Indonesia",
+          "description": "Konten ini ditampilkan pada website versi bahasa Indonesia.",
+          "titleLabel": "Judul Berita (Indonesia)",
+          "titlePlaceholder": "Masukkan judul berita",
+          "excerptLabel": "Ringkasan Berita (Indonesia)",
+          "excerptPlaceholder": "Masukkan ringkasan berita...",
+          "contentLabel": "Isi Berita (Indonesia)",
+          "contentPlaceholder": "Masukkan isi lengkap berita..."
+        },
+        "english": {
+          "title": "Konten Bahasa Inggris",
+          "description": "Konten ini ditampilkan pada website versi bahasa Inggris.",
+          "titleLabel": "Judul Berita (Inggris)",
+          "titlePlaceholder": "Masukkan judul berita dalam bahasa Inggris",
+          "excerptLabel": "Ringkasan Berita (Inggris)",
+          "excerptPlaceholder": "Masukkan ringkasan berita dalam bahasa Inggris...",
+          "contentLabel": "Isi Berita (Inggris)",
+          "contentPlaceholder": "Masukkan isi lengkap berita dalam bahasa Inggris..."
+        },
+        "actions": {
+          "cancel": "Batal",
+          "save": "Simpan Berita",
+          "saving": "Menyimpan..."
+        }
+      },
+      "categories": {
+        "halalCertification": "Sertifikasi Halal",
+        "iso": "ISO",
+        "training": "Pelatihan",
+        "activity": "Kegiatan"
+      },
+      "validation": {
+        "invalidImageFormat": "Format gambar harus JPG, PNG, atau WebP.",
+        "maximumImageSize": "Ukuran gambar maksimal 2 MB.",
+        "coverRequired": "Cover berita wajib ditambahkan.",
+        "submitFailed": "Berita gagal disimpan. Silakan coba kembali."
+      }
+    }
+  }
+}

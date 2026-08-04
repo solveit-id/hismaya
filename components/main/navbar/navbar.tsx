@@ -25,8 +25,9 @@ const Navbar = async () => {
     { label: t("menu.about"), href: "/#about" },
     { label: t("menu.service"), href: "/#service" },
     { label: t("menu.certification"), href: "/#certification" },
+    { label: t("menu.certificationiso"), href: "/iso-certification" },
     { label: t("menu.package"), href: "/#bundling" },
-    { label: t("menu.news"), href: "/#news" },
+    { label: t("menu.news"), href: "/news" },
   ];
 
   return (

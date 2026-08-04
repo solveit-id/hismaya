@@ -23,46 +23,45 @@ const ActiveNavLink = ({
   useEffect(() => {
     /*
     ============================================
-    ACTIVE BERDASARKAN HALAMAN / ROUTE
+    INFORMASI LINK
     ============================================
     */
 
-    // Certification
-    if (
-      href.includes("certification") &&
-      (
-        pathname.includes("/certification") ||
-        pathname.includes("/certification-iso")
-      )
-    ) {
-      setActive(true);
-      return;
-    }
+    const [hrefPath, sectionId] = href.split("#");
 
-    // Bundling
-    if (
-      href.includes("bundling") &&
-      pathname.includes("/bundling")
-    ) {
-      setActive(true);
+    const targetPath = hrefPath || "/";
+    const isSectionLink = Boolean(sectionId);
+    const isHomePage = pathname === "/" || pathname === "";
+
+    /*
+    ============================================
+    ACTIVE BERDASARKAN HALAMAN / ROUTE
+    ============================================
+    Contoh:
+    /news
+    /news/judul-berita
+    /certification
+    /bundling
+    ============================================
+    */
+
+    if (!isSectionLink && targetPath !== "/") {
+      const isSameRoute =
+        pathname === targetPath || pathname.startsWith(`${targetPath}/`);
+
+      setActive(isSameRoute);
+
       return;
     }
 
     /*
     ============================================
-    ACTIVE BERDASARKAN SCROLL SECTION
+    ACTIVE KHUSUS BERANDA
     ============================================
     */
 
-    const sectionId = href.split("#")[1];
-
-    // HOME
-    if (!sectionId) {
+    if (!isSectionLink && targetPath === "/") {
       const checkHome = () => {
-        const isHomePage =
-          pathname === "/" ||
-          pathname === "";
-
         setActive(isHomePage && window.scrollY < 100);
       };
 
@@ -75,6 +74,17 @@ const ActiveNavLink = ({
       };
     }
 
+    /*
+    ============================================
+    SECTION HANYA AKTIF DI HOMEPAGE
+    ============================================
+    */
+
+    if (!isHomePage || !sectionId) {
+      setActive(false);
+      return;
+    }
+
     const section = document.getElementById(sectionId);
 
     if (!section) {
@@ -82,20 +92,46 @@ const ActiveNavLink = ({
       return;
     }
 
+    /*
+    ============================================
+    ACTIVE BERDASARKAN HASH
+    ============================================
+    */
+
+    const checkHash = () => {
+      const currentHash = window.location.hash;
+
+      if (currentHash === `#${sectionId}`) {
+        setActive(true);
+      }
+    };
+
+    checkHash();
+
+    window.addEventListener("hashchange", checkHash);
+
+    /*
+    ============================================
+    ACTIVE BERDASARKAN SCROLL SECTION
+    ============================================
+    */
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setActive(entry.isIntersecting);
       },
       {
-        rootMargin: "-80px 0px -45% 0px",
+        root: null,
+        rootMargin: "-80px 0px -55% 0px",
         threshold: 0,
-      }
+      },
     );
 
     observer.observe(section);
 
     return () => {
       observer.disconnect();
+      window.removeEventListener("hashchange", checkHash);
     };
   }, [href, pathname]);
 
@@ -103,18 +139,14 @@ const ActiveNavLink = ({
     <Link
       href={href}
       className={`
-        ${
-          mobile
-            ? "inline-flex w-fit self-start"
-            : "inline-flex"
-        }
+        ${mobile ? "inline-flex w-fit self-start" : "inline-flex"}
 
         relative w-fit py-2 transition
         hover:text-[#078fd3]
 
         after:absolute
-        after:left-0
         after:bottom-0
+        after:left-0
         after:h-[2px]
         after:bg-[#078fd3]
         after:transition-all

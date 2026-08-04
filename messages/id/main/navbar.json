@@ -5,7 +5,8 @@
     "service": "Layanan",
     "certification": "Sertifikasi",
     "package": "Paket Bundling",
-    "news": "Berita"
+    "news": "Berita",
+    "certificationiso": "Sertifikasi ISO"
   },
   "auth": {
     "login": "Masuk"

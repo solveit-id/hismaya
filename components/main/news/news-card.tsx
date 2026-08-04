@@ -1,15 +1,19 @@
-import { Link } from "@/lib/i18n/navigation"
+"use client";
 
-import type { News } from "@/types/news"
+import { useTranslations } from "next-intl";
+
+import { Link } from "@/lib/i18n/navigation";
+
+import type { News } from "@/types/news";
 
 type NewsCardProps = {
-  news: News
-}
+  news: News;
+};
 
-export default function NewsCard({
-  news,
-}: NewsCardProps) {
-  const detailUrl = `/news/${news.slug}`
+export default function NewsCard({ news }: NewsCardProps) {
+  const t = useTranslations("main.news");
+
+  const detailUrl = `/news/${news.slug}`;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -31,9 +35,7 @@ export default function NewsCard({
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm text-gray-500">
-          {news.publishedAt}
-        </p>
+        <p className="text-sm text-gray-500">{news.publishedAt}</p>
 
         <Link href={detailUrl}>
           <h3 className="mt-3 text-xl font-semibold text-[#252d3c] transition group-hover:text-[#2457ff]">
@@ -41,17 +43,15 @@ export default function NewsCard({
           </h3>
         </Link>
 
-        <p className="mt-3 text-sm leading-6 text-gray-600">
-          {news.excerpt}
-        </p>
+        <p className="mt-3 text-sm leading-6 text-gray-600">{news.excerpt}</p>
 
         <Link
           href={detailUrl}
           className="mt-auto pt-5 text-sm font-semibold text-[#2457ff]"
         >
-          Baca selengkapnya →
+          {t("card.readMore")}
         </Link>
       </div>
     </article>
-  )
+  );
 }

@@ -2,6 +2,8 @@ import { auth } from "@/auth";
 import { redirect } from "@/lib/i18n/navigation";
 import { prisma } from "@/lib/prisma";
 
+import { getVisitorStats } from "@/lib/dashboard/get-visitor-stats";
+
 import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
@@ -78,7 +80,7 @@ export default async function AdminDashboardPage({ params }: Props) {
   // FETCH DATA
   // =========================
   const [
-    totalUsers,
+    totalUsers, 
     totalAdmins,
     totalSessions,
     totalCategories,
@@ -91,6 +93,7 @@ export default async function AdminDashboardPage({ params }: Props) {
     recentUsers,
     recentCertifications,
     recentTestimonials,
+    visitorStats,
   ] = await Promise.all([
     prisma.user.count(),
 
@@ -166,6 +169,8 @@ export default async function AdminDashboardPage({ params }: Props) {
         user: true,
       },
     }),
+
+    getVisitorStats(), // <-- tambahkan ini
   ]);
 
   // =========================
@@ -212,46 +217,24 @@ export default async function AdminDashboardPage({ params }: Props) {
     .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
     .slice(0, 6);
 
-  // DUMMY DATA FOR TRACKING
+  // DATA FOR TRACKING
   const visitStatistics = {
-    totalVisits: 12480,
-    todayVisits: 328,
-    uniqueVisitors: 8964,
-    growth: 12.5,
+    totalVisits: visitorStats.totalVisitors,
+    todayVisits: visitorStats.todayVisitors,
+    uniqueVisitors: visitorStats.uniqueVisitors,
+    growth: visitorStats.growth,
   };
 
-  const weeklyVisits = [
-    { day: "Sen", visits: 520 },
-    { day: "Sel", visits: 680 },
-    { day: "Rab", visits: 610 },
-    { day: "Kam", visits: 840 },
-    { day: "Jum", visits: 760 },
-    { day: "Sab", visits: 920 },
-    { day: "Min", visits: 810 },
-  ];
+  const weeklyVisits = visitorStats.weeklyVisitors.map((item) => ({
+    day: item.day,
+    visits: item.visitors,
+  }));
 
-  const trafficSources = [
-    {
-      source: "Direct",
-      visitors: 4280,
-      percentage: 42,
-    },
-    {
-      source: "Google Search",
-      visitors: 3150,
-      percentage: 31,
-    },
-    {
-      source: "Social Media",
-      visitors: 1740,
-      percentage: 17,
-    },
-    {
-      source: "Referral",
-      visitors: 1020,
-      percentage: 10,
-    },
-  ];
+  const trafficSources = visitorStats.trafficSources.map((item) => ({
+    source: item.label,
+    visitors: item.visitors,
+    percentage: item.percentage,
+  }));
 
   const maximumVisit = Math.max(...weeklyVisits.map((item) => item.visits));
 

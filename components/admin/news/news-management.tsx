@@ -1,32 +1,61 @@
-"use client";
-
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+"use client"
 
 import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+} from "react"
+import {
+  useLocale,
+  useTranslations,
+} from "next-intl"
+
+import {
+  FiEdit2,
+  FiEye,
   FiFileText,
   FiImage,
   FiLoader,
   FiPlus,
+  FiTrash2,
   FiUpload,
   FiX,
-} from "react-icons/fi";
+} from "react-icons/fi"
 
-type NewsStatus = "draft" | "published";
+import { useRouter } from "@/lib/i18n/navigation"
+
+import type { BlogItem } from "@/features/admin/blog"
+import {
+  createBlog,
+  deleteBlog,
+  updateBlog,
+} from "@/features/admin/blog"
+
+type Props = {
+  blogs?: BlogItem[]
+  categories?: {
+    id: string
+    name: {
+      id: string
+      en: string
+    }
+  }[]
+}
+
+type NewsStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED"
 
 type NewsFormValues = {
-  titleId: string;
-  titleEn: string;
-  excerptId: string;
-  excerptEn: string;
-  contentId: string;
-  contentEn: string;
-  categoryId: string;
-  author: string;
-  publishedAt: string;
-  status: NewsStatus;
-  coverImage: File | null;
-};
+  titleId: string
+  titleEn: string
+  excerptId: string
+  excerptEn: string
+  contentId: string
+  contentEn: string
+  status: NewsStatus
+  categoryId: string
+  coverImage: File | null
+}
 
 const initialFormValues: NewsFormValues = {
   titleId: "",
@@ -35,104 +64,140 @@ const initialFormValues: NewsFormValues = {
   excerptEn: "",
   contentId: "",
   contentEn: "",
+  status: "DRAFT",
   categoryId: "",
-  author: "",
-  publishedAt: "",
-  status: "draft",
   coverImage: null,
-};
+}
 
-const categories = [
-  {
-    id: "1",
-    name: "Sertifikasi Halal",
-  },
-  {
-    id: "2",
-    name: "ISO",
-  },
-  {
-    id: "3",
-    name: "Pelatihan",
-  },
-  {
-    id: "4",
-    name: "Kegiatan",
-  },
-];
+const mapBlogToForm = (
+  blog: BlogItem
+): NewsFormValues => ({
+  titleId: blog.title.id,
+  titleEn: blog.title.en,
+  excerptId: blog.excerpt?.id || "",
+  excerptEn: blog.excerpt?.en || "",
+  contentId: blog.content.id,
+  contentEn: blog.content.en,
+  status: blog.status,
+  categoryId: blog.categoryId || "",
+  coverImage: null,
+})
 
-export default function NewsManagement() {
-  const t = useTranslations("admin.news");
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+const appendBlogFormData = (
+  formData: FormData,
+  values: NewsFormValues
+) => {
+  formData.append("title_id", values.titleId)
+  formData.append("title_en", values.titleEn)
+  formData.append("excerpt_id", values.excerptId)
+  formData.append("excerpt_en", values.excerptEn)
+  formData.append("content_id", values.contentId)
+  formData.append("content_en", values.contentEn)
+  formData.append("status", values.status)
+  formData.append("categoryId", values.categoryId)
 
-  const [successMessage, setSuccessMessage] = useState("");
+  if (values.coverImage) {
+    formData.append("img", values.coverImage)
+  }
+}
 
-  async function handleAddNews(values: NewsFormValues) {
-    /*
-     * FRONTEND ONLY
-     *
-     * Untuk sementara data hanya ditampilkan
-     * melalui console browser.
-     */
-    console.log("Data berita siap dikirim:", values);
+export default function NewsManagement({
+  blogs = [],
+  categories = [],
+}: Props) {
+  const t = useTranslations("admin.news")
+  const router = useRouter()
 
-    /*
-     * FormData disiapkan karena form memiliki
-     * file cover.
-     */
-    const formData = new FormData();
+  const [isAddModalOpen, setIsAddModalOpen] =
+    useState(false)
+  const [selectedBlog, setSelectedBlog] =
+    useState<BlogItem | null>(null)
+  const [modalMode, setModalMode] = useState<
+    "detail" | "edit" | null
+  >(null)
+  const [successMessage, setSuccessMessage] =
+    useState("")
+  const [deleteError, setDeleteError] = useState("")
+  const [deletingId, setDeletingId] = useState<
+    string | null
+  >(null)
 
-    formData.append("title_id", values.titleId);
-    formData.append("title_en", values.titleEn);
-
-    formData.append("excerpt_id", values.excerptId);
-
-    formData.append("excerpt_en", values.excerptEn);
-
-    formData.append("content_id", values.contentId);
-
-    formData.append("content_en", values.contentEn);
-
-    formData.append("category_id", values.categoryId);
-
-    formData.append("author", values.author);
-
-    formData.append("published_at", values.publishedAt);
-
-    formData.append("status", values.status);
-
-    if (values.coverImage) {
-      formData.append("cover_image", values.coverImage);
-    }
-
-    /*
-     * Aktifkan bagian ini setelah endpoint
-     * backend sudah tersedia.
-     */
-
-    /*
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/news`,
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        "Gagal menambahkan berita",
-      );
-    }
-    */
-
-    setIsAddModalOpen(false);
-
-    setSuccessMessage("Berita berhasil disiapkan.");
+  function showSuccess(message: string) {
+    setSuccessMessage(message)
 
     window.setTimeout(() => {
-      setSuccessMessage("");
-    }, 3000);
+      setSuccessMessage("")
+    }, 3000)
+  }
+
+  async function handleAddNews(
+    values: NewsFormValues
+  ) {
+    const formData = new FormData()
+    appendBlogFormData(formData, values)
+
+    const response = await createBlog(formData)
+
+    if (!response.success) {
+      throw new Error(response.message)
+    }
+
+    setIsAddModalOpen(false)
+    router.refresh()
+    showSuccess("Berita berhasil ditambahkan.")
+  }
+
+  async function handleUpdateNews(
+    values: NewsFormValues
+  ) {
+    if (!selectedBlog) return
+
+    const formData = new FormData()
+    appendBlogFormData(formData, values)
+
+    const response = await updateBlog(
+      selectedBlog.id,
+      formData
+    )
+
+    if (!response.success) {
+      throw new Error(response.message)
+    }
+
+    setSelectedBlog(null)
+    setModalMode(null)
+    router.refresh()
+    showSuccess("Berita berhasil diperbarui.")
+  }
+
+  async function handleDeleteNews(blog: BlogItem) {
+    const confirmed = window.confirm(
+      `Hapus berita "${blog.title.id}"?`
+    )
+
+    if (!confirmed) return
+
+    try {
+      setDeletingId(blog.id)
+      setDeleteError("")
+
+      const response = await deleteBlog(blog.id)
+
+      if (!response.success) {
+        throw new Error(response.message)
+      }
+
+      router.refresh()
+      showSuccess("Berita berhasil dihapus.")
+    } catch (error) {
+      console.error("Gagal menghapus berita:", error)
+
+      setDeleteError(
+        "Berita gagal dihapus. Silakan coba kembali."
+      )
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   return (
@@ -165,197 +230,389 @@ export default function NewsManagement() {
           </div>
         )}
 
-        <section className="mt-8 rounded-xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-            <FiFileText size={26} />
-          </span>
+        {deleteError && (
+          <div className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+            {deleteError}
+          </div>
+        )}
 
-          <h2 className="mt-4 font-bold text-slate-900">
-            Data berita akan ditampilkan di sini
-          </h2>
+        <section className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          {blogs.length === 0 ? (
+            <div className="p-10 text-center">
+              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                <FiFileText size={26} />
+              </span>
 
-          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-            Setelah API backend tersedia, bagian ini dapat diganti dengan tabel
-            daftar berita, status publikasi, dan tombol edit atau hapus.
-          </p>
+              <h2 className="mt-4 font-bold text-slate-900">
+                Belum ada berita
+              </h2>
 
-          <button
-            type="button"
-            onClick={() => setIsAddModalOpen(true)}
-            className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
-          >
-            <FiPlus size={17} />
-            Tambah berita pertama
-          </button>
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+                Tambahkan berita pertama untuk mulai menampilkan konten di halaman user.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setIsAddModalOpen(true)}
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+              >
+                <FiPlus size={17} />
+                Tambah berita pertama
+              </button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 text-xs uppercase text-slate-500">
+                  <tr>
+                    <th className="px-5 py-3 font-semibold">
+                      Judul
+                    </th>
+                    <th className="px-5 py-3 font-semibold">
+                      Slug
+                    </th>
+                    <th className="px-5 py-3 font-semibold">
+                      Status
+                    </th>
+                    <th className="px-5 py-3 font-semibold">
+                      Admin
+                    </th>
+                    <th className="px-5 py-3 font-semibold">
+                      Dibuat
+                    </th>
+                    <th className="px-5 py-3 text-right font-semibold">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-slate-200">
+                  {blogs.map((blog) => (
+                    <tr
+                      key={blog.id}
+                      className="hover:bg-slate-50"
+                    >
+                      <td className="px-5 py-4">
+                        <div className="font-semibold text-slate-900">
+                          {blog.title.id}
+                        </div>
+
+                        <div className="mt-1 text-xs text-slate-500">
+                          {blog.title.en}
+                        </div>
+                      </td>
+
+                      <td className="px-5 py-4 text-slate-600">
+                        /{blog.slug}
+                      </td>
+
+                      <td className="px-5 py-4">
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                          {blog.status}
+                        </span>
+                      </td>
+
+                      <td className="px-5 py-4 text-slate-600">
+                        {blog.admin?.name || "-"}
+                      </td>
+
+                      <td className="px-5 py-4 text-slate-600">
+                        {new Date(
+                          blog.createdAt
+                        ).toLocaleDateString("id-ID")}
+                      </td>
+
+                      <td className="px-5 py-4">
+                        <div className="flex justify-end gap-2">
+                          <IconButton
+                            label="Detail"
+                            onClick={() => {
+                              setSelectedBlog(blog)
+                              setModalMode("detail")
+                            }}
+                          >
+                            <FiEye size={16} />
+                          </IconButton>
+
+                          <IconButton
+                            label="Edit"
+                            onClick={() => {
+                              setSelectedBlog(blog)
+                              setModalMode("edit")
+                            }}
+                          >
+                            <FiEdit2 size={16} />
+                          </IconButton>
+
+                          <IconButton
+                            label="Hapus"
+                            onClick={() =>
+                              handleDeleteNews(blog)
+                            }
+                            disabled={
+                              deletingId === blog.id
+                            }
+                            tone="danger"
+                          >
+                            {deletingId === blog.id ? (
+                              <FiLoader
+                                size={16}
+                                className="animate-spin"
+                              />
+                            ) : (
+                              <FiTrash2 size={16} />
+                            )}
+                          </IconButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
       </div>
 
-      <AddNewsModal
+      <NewsFormModal
         isOpen={isAddModalOpen}
+        mode="create"
+        categories={categories}
         onClose={() => setIsAddModalOpen(false)}
         onSubmit={handleAddNews}
       />
+
+      <NewsDetailModal
+        blog={modalMode === "detail" ? selectedBlog : null}
+        onClose={() => {
+          setSelectedBlog(null)
+          setModalMode(null)
+        }}
+        onEdit={() => setModalMode("edit")}
+      />
+
+      <NewsFormModal
+        isOpen={modalMode === "edit" && !!selectedBlog}
+        mode="edit"
+        categories={categories}
+        initialValues={
+          selectedBlog
+            ? mapBlogToForm(selectedBlog)
+            : initialFormValues
+        }
+        existingImageUrl={selectedBlog?.img || ""}
+        onClose={() => {
+          setSelectedBlog(null)
+          setModalMode(null)
+        }}
+        onSubmit={handleUpdateNews}
+      />
     </main>
-  );
+  )
 }
 
-type AddNewsModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (values: NewsFormValues) => Promise<void> | void;
-};
+type IconButtonProps = {
+  label: string
+  children: React.ReactNode
+  onClick: () => void
+  disabled?: boolean
+  tone?: "default" | "danger"
+}
 
-function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
-  const t = useTranslations("admin.news");
-  const [form, setForm] = useState<NewsFormValues>(initialFormValues);
+function IconButton({
+  label,
+  children,
+  onClick,
+  disabled = false,
+  tone = "default",
+}: IconButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      title={label}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border transition disabled:cursor-not-allowed disabled:opacity-60 ${
+        tone === "danger"
+          ? "border-red-200 text-red-600 hover:bg-red-50"
+          : "border-slate-200 text-slate-600 hover:bg-slate-100"
+      }`}
+    >
+      {children}
+    </button>
+  )
+}
 
-  const [previewUrl, setPreviewUrl] = useState("");
+type NewsFormModalProps = {
+  isOpen: boolean
+  mode: "create" | "edit"
+  initialValues?: NewsFormValues
+  existingImageUrl?: string
+  categories?: {
+    id: string
+    name: {
+      id: string
+      en: string
+    }
+  }[]
+  onClose: () => void
+  onSubmit: (
+    values: NewsFormValues
+  ) => Promise<void> | void
+}
 
-  const [coverError, setCoverError] = useState("");
-
-  const [submitError, setSubmitError] = useState("");
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+function NewsFormModal({
+  isOpen,
+  mode,
+  initialValues = initialFormValues,
+  existingImageUrl = "",
+  categories = [],
+  onClose,
+  onSubmit,
+}: NewsFormModalProps) {
+  const t = useTranslations("admin.news")
+  const [form, setForm] =
+    useState<NewsFormValues>(initialValues)
+  const [previewUrl, setPreviewUrl] = useState("")
+  const [coverError, setCoverError] = useState("")
+  const [submitError, setSubmitError] = useState("")
+  const [isSubmitting, setIsSubmitting] =
+    useState(false)
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
+    if (isOpen) {
+      setForm(initialValues)
+      setCoverError("")
+      setSubmitError("")
+      setPreviewUrl("")
     }
+  }, [initialValues, isOpen])
 
-    const previousOverflow = document.body.style.overflow;
+  useEffect(() => {
+    if (!isOpen) return
 
-    document.body.style.overflow = "hidden";
+    const previousOverflow =
+      document.body.style.overflow
+
+    document.body.style.overflow = "hidden"
 
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        onClose()
       }
     }
 
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener("keydown", handleEscape)
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [isOpen, onClose]);
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener(
+        "keydown",
+        handleEscape
+      )
+    }
+  }, [isOpen, onClose])
 
   useEffect(() => {
     if (!form.coverImage) {
-      setPreviewUrl("");
-      return;
+      setPreviewUrl("")
+      return
     }
 
-    const objectUrl = URL.createObjectURL(form.coverImage);
+    const objectUrl = URL.createObjectURL(
+      form.coverImage
+    )
 
-    setPreviewUrl(objectUrl);
+    setPreviewUrl(objectUrl)
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
-    };
-  }, [form.coverImage]);
+      URL.revokeObjectURL(objectUrl)
+    }
+  }, [form.coverImage])
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null
 
   function updateField<Key extends keyof NewsFormValues>(
     key: Key,
-    value: NewsFormValues[Key],
+    value: NewsFormValues[Key]
   ) {
     setForm((currentForm) => ({
       ...currentForm,
       [key]: value,
-    }));
+    }))
   }
 
-  function handleCoverChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
+  function handleCoverChange(
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.target.files?.[0]
 
-    if (!file) {
-      return;
-    }
+    if (!file) return
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-
-    const maximumFileSize = 2 * 1024 * 1024;
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+    ]
+    const maximumFileSize = 2 * 1024 * 1024
 
     if (!allowedTypes.includes(file.type)) {
-      setCoverError("Format gambar harus JPG, PNG, atau WebP.");
+      setCoverError(
+        "Format gambar harus JPG, PNG, atau WebP."
+      )
 
-      event.target.value = "";
-      return;
+      event.target.value = ""
+      return
     }
 
     if (file.size > maximumFileSize) {
-      setCoverError("Ukuran gambar maksimal 2 MB.");
+      setCoverError("Ukuran gambar maksimal 2 MB.")
 
-      event.target.value = "";
-      return;
+      event.target.value = ""
+      return
     }
 
-    setCoverError("");
-
-    updateField("coverImage", file);
+    setCoverError("")
+    updateField("coverImage", file)
   }
 
-  function resetForm() {
-    setForm(initialFormValues);
-    setCoverError("");
-    setSubmitError("");
-    setPreviewUrl("");
-  }
-
-  function handleClose() {
-    if (isSubmitting) {
-      return;
-    }
-
-    resetForm();
-    onClose();
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!form.coverImage) {
-      setCoverError("Cover berita wajib ditambahkan.");
-
-      return;
-    }
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault()
 
     try {
-      setIsSubmitting(true);
-      setSubmitError("");
+      setIsSubmitting(true)
+      setSubmitError("")
 
-      await onSubmit(form);
-
-      resetForm();
+      await onSubmit(form)
     } catch (error) {
-      console.error("Gagal menyimpan berita:", error);
+      console.error("Gagal menyimpan berita:", error)
 
-      setSubmitError("Berita gagal disimpan. Silakan coba kembali.");
+      setSubmitError(
+        "Berita gagal disimpan. Silakan coba kembali."
+      )
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
   }
+
+  const imagePreview = previewUrl || existingImageUrl
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="add-news-title"
     >
       <div className="flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
         <header className="flex shrink-0 items-start justify-between border-b border-slate-200 px-6 py-5">
           <div>
-            <h2
-              id="add-news-title"
-              className="text-xl font-bold text-slate-900"
-            >
-              {t("modal.title")}
+            <h2 className="text-xl font-bold text-slate-900">
+              {mode === "edit"
+                ? "Edit Berita"
+                : t("modal.title")}
             </h2>
 
             <p className="mt-1 text-sm text-slate-500">
@@ -365,7 +622,7 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
 
           <button
             type="button"
-            onClick={handleClose}
+            onClick={onClose}
             disabled={isSubmitting}
             className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed"
             aria-label="Tutup modal"
@@ -374,61 +631,16 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
           </button>
         </header>
 
-        <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
+        <form
+          onSubmit={handleSubmit}
+          className="flex min-h-0 flex-1 flex-col"
+        >
           <div className="flex-1 space-y-8 overflow-y-auto px-6 py-6">
             <FormSection
               title={t("form.general.title")}
               description={t("form.general.description")}
             >
               <div className="grid gap-5 md:grid-cols-2">
-                <div>
-                  <FieldLabel htmlFor="categoryId" required>
-                    {t("form.general.categoryLabel")}
-                  </FieldLabel>
-
-                  <select
-                    id="categoryId"
-                    value={form.categoryId}
-                    onChange={(event) =>
-                      updateField("categoryId", event.target.value)
-                    }
-                    required
-                    className={inputClassName}
-                  >
-                    <option value="">
-                      {t("form.general.categoryPlaceholder")}
-                    </option>
-
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <TextInput
-                  id="author"
-                  label={t("form.general.authorLabel")}
-                  placeholder={t("form.general.authorPlaceholder")}
-                  value={form.author}
-                  onChange={(event) =>
-                    updateField("author", event.target.value)
-                  }
-                  required
-                />
-
-                <TextInput
-                  id="publishedAt"
-                  label="Tanggal Publikasi"
-                  type="date"
-                  value={form.publishedAt}
-                  onChange={(event) =>
-                    updateField("publishedAt", event.target.value)
-                  }
-                  required
-                />
-
                 <div>
                   <FieldLabel htmlFor="status" required>
                     Status
@@ -438,14 +650,54 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
                     id="status"
                     value={form.status}
                     onChange={(event) =>
-                      updateField("status", event.target.value as NewsStatus)
+                      updateField(
+                        "status",
+                        event.target.value as NewsStatus
+                      )
                     }
                     className={inputClassName}
                     required
                   >
-                    <option value="draft">Draft</option>
+                    <option value="DRAFT">
+                      Draft
+                    </option>
+                    <option value="PUBLISHED">
+                      Publikasikan
+                    </option>
+                    <option value="ARCHIVED">
+                      Arsipkan
+                    </option>
+                  </select>
+                </div>
 
-                    <option value="published">Publikasikan</option>
+                <div>
+                  <FieldLabel htmlFor="categoryId" required>
+                    Kategori
+                  </FieldLabel>
+
+                  <select
+                    id="categoryId"
+                    value={form.categoryId}
+                    onChange={(event) =>
+                      updateField(
+                        "categoryId",
+                        event.target.value
+                      )
+                    }
+                    className={inputClassName}
+                    required
+                  >
+                    <option value="">
+                      Pilih kategori
+                    </option>
+                    {categories.map((category) => (
+                      <option
+                        key={category.id}
+                        value={category.id}
+                      >
+                        {category.name.id}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -456,13 +708,13 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
               description="Gunakan gambar JPG, PNG, atau WebP dengan ukuran maksimal 2 MB."
             >
               <label
-                htmlFor="coverImage"
+                htmlFor={`coverImage-${mode}`}
                 className="group block cursor-pointer"
               >
-                {previewUrl ? (
+                {imagePreview ? (
                   <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
                     <img
-                      src={previewUrl}
+                      src={imagePreview}
                       alt="Preview cover berita"
                       className="h-64 w-full object-cover"
                     />
@@ -485,14 +737,16 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
                     </span>
 
                     <span className="mt-1 text-xs text-slate-500">
-                      JPG, PNG, atau WebP. Maksimal 2 MB.
+                      {mode === "edit"
+                        ? "Belum ada gambar tersimpan. JPG, PNG, atau WebP. Maksimal 2 MB."
+                        : "JPG, PNG, atau WebP. Maksimal 2 MB."}
                     </span>
                   </div>
                 )}
               </label>
 
               <input
-                id="coverImage"
+                id={`coverImage-${mode}`}
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 onChange={handleCoverChange}
@@ -500,46 +754,62 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
               />
 
               {coverError && (
-                <p className="mt-2 text-sm text-red-600">{coverError}</p>
+                <p className="mt-2 text-sm text-red-600">
+                  {coverError}
+                </p>
               )}
             </FormSection>
 
             <FormSection
               title={t("form.indonesian.title")}
-              description={t("form.indonesian.description")}
+              description={t(
+                "form.indonesian.description"
+              )}
             >
               <div className="space-y-5">
                 <TextInput
-                  id="titleId"
-                  label={t("form.indonesian.titleLabel")}
-                  placeholder={t("form.indonesian.titlePlaceholder")}
+                  id={`titleId-${mode}`}
+                  label={t(
+                    "form.indonesian.titleLabel"
+                  )}
+                  placeholder={t(
+                    "form.indonesian.titlePlaceholder"
+                  )}
                   value={form.titleId}
                   onChange={(event) =>
-                    updateField("titleId", event.target.value)
+                    updateField(
+                      "titleId",
+                      event.target.value
+                    )
                   }
                   required
                 />
 
                 <TextArea
-                  id="excerptId"
+                  id={`excerptId-${mode}`}
                   label="Ringkasan Berita (Indonesia)"
                   placeholder="Masukkan ringkasan berita..."
                   value={form.excerptId}
                   onChange={(event) =>
-                    updateField("excerptId", event.target.value)
+                    updateField(
+                      "excerptId",
+                      event.target.value
+                    )
                   }
                   maxLength={300}
                   rows={3}
-                  required
                 />
 
                 <TextArea
-                  id="contentId"
+                  id={`contentId-${mode}`}
                   label="Isi Berita (Indonesia)"
                   placeholder="Masukkan isi lengkap berita..."
                   value={form.contentId}
                   onChange={(event) =>
-                    updateField("contentId", event.target.value)
+                    updateField(
+                      "contentId",
+                      event.target.value
+                    )
                   }
                   rows={9}
                   required
@@ -553,36 +823,46 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
             >
               <div className="space-y-5">
                 <TextInput
-                  id="titleEn"
+                  id={`titleEn-${mode}`}
                   label={t("form.english.titleLabel")}
-                  placeholder={t("form.english.titlePlaceholder")}
+                  placeholder={t(
+                    "form.english.titlePlaceholder"
+                  )}
                   value={form.titleEn}
                   onChange={(event) =>
-                    updateField("titleEn", event.target.value)
+                    updateField(
+                      "titleEn",
+                      event.target.value
+                    )
                   }
                   required
                 />
 
                 <TextArea
-                  id="excerptEn"
+                  id={`excerptEn-${mode}`}
                   label="News Summary (English)"
                   placeholder="Enter a short news summary..."
                   value={form.excerptEn}
                   onChange={(event) =>
-                    updateField("excerptEn", event.target.value)
+                    updateField(
+                      "excerptEn",
+                      event.target.value
+                    )
                   }
                   maxLength={300}
                   rows={3}
-                  required
                 />
 
                 <TextArea
-                  id="contentEn"
+                  id={`contentEn-${mode}`}
                   label="News Content (English)"
                   placeholder="Enter the complete news content..."
                   value={form.contentEn}
                   onChange={(event) =>
-                    updateField("contentEn", event.target.value)
+                    updateField(
+                      "contentEn",
+                      event.target.value
+                    )
                   }
                   rows={9}
                   required
@@ -600,7 +880,7 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
           <footer className="flex shrink-0 items-center justify-end gap-3 border-t border-slate-200 bg-white px-6 py-4">
             <button
               type="button"
-              onClick={handleClose}
+              onClick={onClose}
               disabled={isSubmitting}
               className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
@@ -614,9 +894,14 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
             >
               {isSubmitting ? (
                 <>
-                  <FiLoader size={17} className="animate-spin" />
+                  <FiLoader
+                    size={17}
+                    className="animate-spin"
+                  />
                   {t("form.actions.saving")}
                 </>
+              ) : mode === "edit" ? (
+                "Simpan Perubahan"
               ) : (
                 t("form.actions.save")
               )}
@@ -625,39 +910,242 @@ function AddNewsModal({ isOpen, onClose, onSubmit }: AddNewsModalProps) {
         </form>
       </div>
     </div>
-  );
+  )
+}
+
+type NewsDetailModalProps = {
+  blog: BlogItem | null
+  onClose: () => void
+  onEdit: () => void
+}
+
+function NewsDetailModal({
+  blog,
+  onClose,
+  onEdit,
+}: NewsDetailModalProps) {
+  const locale = useLocale()
+
+  useEffect(() => {
+    if (!blog) return
+
+    const previousOverflow =
+      document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [blog])
+
+  if (!blog) return null
+
+  const publicDetailUrl = `/${locale}/news/${blog.slug}`
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <header className="flex shrink-0 items-start justify-between border-b border-slate-200 px-6 py-5">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">
+              Detail Berita
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              /{blog.slug}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+            aria-label="Tutup modal"
+          >
+            <FiX size={20} />
+          </button>
+        </header>
+
+        <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
+          {blog.img ? (
+            <img
+              src={blog.img}
+              alt={blog.title.id}
+              className="h-72 w-full rounded-xl object-cover"
+            />
+          ) : (
+            <div className="flex h-72 w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-center">
+              <FiImage
+                size={32}
+                className="text-slate-400"
+              />
+              <p className="mt-3 text-sm font-semibold text-slate-600">
+                Belum ada gambar tersimpan
+              </p>
+              <p className="mt-1 text-xs text-slate-400">
+                Tambahkan gambar melalui menu edit.
+              </p>
+            </div>
+          )}
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <InfoBox label="Status" value={blog.status} />
+            <InfoBox
+              label="Admin"
+              value={blog.admin?.name || "-"}
+            />
+            <InfoBox
+              label="Dibuat"
+              value={new Date(
+                blog.createdAt
+              ).toLocaleDateString("id-ID")}
+            />
+          </div>
+
+          <DetailSection title="Bahasa Indonesia">
+            <h3 className="text-lg font-bold text-slate-900">
+              {blog.title.id}
+            </h3>
+            {blog.excerpt?.id && (
+              <p className="mt-2 text-sm font-medium text-slate-600">
+                {blog.excerpt.id}
+              </p>
+            )}
+            <p className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-700">
+              {blog.content.id}
+            </p>
+          </DetailSection>
+
+          <DetailSection title="English">
+            <h3 className="text-lg font-bold text-slate-900">
+              {blog.title.en}
+            </h3>
+            {blog.excerpt?.en && (
+              <p className="mt-2 text-sm font-medium text-slate-600">
+                {blog.excerpt.en}
+              </p>
+            )}
+            <p className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-700">
+              {blog.content.en}
+            </p>
+          </DetailSection>
+        </div>
+
+        <footer className="flex shrink-0 items-center justify-end gap-3 border-t border-slate-200 bg-white px-6 py-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+          >
+            Tutup
+          </button>
+
+          <a
+            href={publicDetailUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+          >
+            Lihat di halaman user
+          </a>
+
+          <button
+            type="button"
+            onClick={onEdit}
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+          >
+            <FiEdit2 size={17} />
+            Edit
+          </button>
+        </footer>
+      </div>
+    </div>
+  )
+}
+
+function InfoBox({
+  label,
+  value,
+}: {
+  label: string
+  value: string
+}) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <p className="text-xs font-semibold uppercase text-slate-400">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-semibold text-slate-800">
+        {value}
+      </p>
+    </div>
+  )
+}
+
+function DetailSection({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="rounded-xl border border-slate-200 p-5">
+      <p className="mb-3 text-xs font-semibold uppercase text-slate-400">
+        {title}
+      </p>
+      {children}
+    </section>
+  )
 }
 
 const inputClassName =
-  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
+  "h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
 
 type FieldLabelProps = {
-  htmlFor: string;
-  children: string;
-  required?: boolean;
-};
+  htmlFor: string
+  children: string
+  required?: boolean
+}
 
-function FieldLabel({ htmlFor, children, required = false }: FieldLabelProps) {
+function FieldLabel({
+  htmlFor,
+  children,
+  required = false,
+}: FieldLabelProps) {
   return (
     <label
       htmlFor={htmlFor}
       className="mb-2 block text-sm font-semibold text-slate-700"
     >
       {children}
-
-      {required && <span className="ml-1 text-red-500">*</span>}
+      {required && (
+        <span className="ml-1 text-red-500">*</span>
+      )}
     </label>
-  );
+  )
 }
 
-type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
-};
+type TextInputProps =
+  React.InputHTMLAttributes<HTMLInputElement> & {
+    label: string
+  }
 
-function TextInput({ id, label, required, ...props }: TextInputProps) {
+function TextInput({
+  id,
+  label,
+  required,
+  ...props
+}: TextInputProps) {
   return (
     <div>
-      <FieldLabel htmlFor={String(id)} required={required}>
+      <FieldLabel
+        htmlFor={String(id)}
+        required={required}
+      >
         {label}
       </FieldLabel>
 
@@ -668,12 +1156,13 @@ function TextInput({ id, label, required, ...props }: TextInputProps) {
         className={inputClassName}
       />
     </div>
-  );
+  )
 }
 
-type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  label: string;
-};
+type TextAreaProps =
+  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    label: string
+  }
 
 function TextArea({
   id,
@@ -683,11 +1172,15 @@ function TextArea({
   value,
   ...props
 }: TextAreaProps) {
-  const currentLength = typeof value === "string" ? value.length : 0;
+  const currentLength =
+    typeof value === "string" ? value.length : 0
 
   return (
     <div>
-      <FieldLabel htmlFor={String(id)} required={required}>
+      <FieldLabel
+        htmlFor={String(id)}
+        required={required}
+      >
         {label}
       </FieldLabel>
 
@@ -706,23 +1199,31 @@ function TextArea({
         </p>
       )}
     </div>
-  );
+  )
 }
 
 type FormSectionProps = {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-};
+  title: string
+  description: string
+  children: React.ReactNode
+}
 
-function FormSection({ title, description, children }: FormSectionProps) {
+function FormSection({
+  title,
+  description,
+  children,
+}: FormSectionProps) {
   return (
     <section className="border-b border-slate-200 pb-8 last:border-b-0">
-      <h3 className="font-bold text-slate-900">{title}</h3>
+      <h3 className="font-bold text-slate-900">
+        {title}
+      </h3>
 
-      <p className="mt-1 text-sm leading-6 text-slate-500">{description}</p>
+      <p className="mt-1 text-sm leading-6 text-slate-500">
+        {description}
+      </p>
 
       <div className="mt-5">{children}</div>
     </section>
-  );
+  )
 }

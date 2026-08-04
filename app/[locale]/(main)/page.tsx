@@ -17,16 +17,23 @@ import { getServices } from "@/features/main/service";
 
 import { getCertifications } from "@/features/main/certification";
 
-import { newsData } from "@/lib/dum-data-news";
+import { getNews } from "@/features/main/news";
 
 import { getPackages } from "@/features/main/package";
 
-export default async function HomePage() {
-  const [abouts, services, certifications, packages] = await Promise.all([
+export default async function HomePage({
+  params,
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  const [abouts, services, certifications, packages, news] = await Promise.all([
     getAbouts(),
     getServices(),
     getCertifications(),
     getPackages(),
+    getNews(params.locale),
   ]);
 
   return (
@@ -43,7 +50,7 @@ export default async function HomePage() {
 
       <BundlingPackage />
 
-      <NewsSection news={newsData} />
+      <NewsSection news={news} />
     </div>
   );
 }

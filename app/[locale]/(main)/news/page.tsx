@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import NewsList from "@/components/main/news/news-list";
-import { newsData } from "@/lib/dum-data-news";
+import { getNews } from "@/features/main/news";
 
 export const metadata: Metadata = {
   title: "Berita dan Artikel | Hismaya",
@@ -9,7 +9,15 @@ export const metadata: Metadata = {
     "Informasi terbaru mengenai sertifikasi halal, pelatihan, UMKM, dan pengembangan industri halal.",
 };
 
-export default function NewsPage() {
+export default async function NewsPage({
+  params,
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  const news = await getNews(params.locale);
+
   return (
     <main className="min-h-screen bg-gray-50">
       <section className="bg-[#078fd3] px-4 py-20 text-white sm:px-6 lg:px-8">
@@ -31,7 +39,7 @@ export default function NewsPage() {
 
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <NewsList news={newsData} />
+          <NewsList news={news} />
         </div>
       </section>
     </main>

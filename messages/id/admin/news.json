@@ -1,6 +1,4 @@
 {
-  "admin": {
-    "news": {
       "page": {
         "title": "Kelola Berita",
         "description": "Tambah dan kelola berita Hismaya dalam bahasa Indonesia dan Inggris.",
@@ -26,7 +24,8 @@
           "publishDateLabel": "Tanggal Publikasi",
           "statusLabel": "Status",
           "draft": "Draft",
-          "published": "Publikasikan"
+          "published": "Publikasikan",
+          "archived": "Arsipkan"
         },
         "cover": {
           "title": "Cover Berita",
@@ -74,6 +73,4 @@
         "coverRequired": "Cover berita wajib ditambahkan.",
         "submitFailed": "Berita gagal disimpan. Silakan coba kembali."
       }
-    }
-  }
 }

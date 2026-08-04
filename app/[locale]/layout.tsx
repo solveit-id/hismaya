@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
+import VisitorTracker from "@/components/shared/visitor/visitor-tracker";
 
 import { NextIntlClientProvider } from "next-intl";
 import {
@@ -60,6 +61,7 @@ export default async function RootLayout({
           messages={messages}
         >
           <AuthSessionProvider>
+            <VisitorTracker />
             <IdleSessionManager />
             {children}
 

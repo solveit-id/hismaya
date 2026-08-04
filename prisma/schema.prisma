@@ -9,18 +9,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -40,22 +40,24 @@ model Session {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String          @unique
-  phone         String?         @unique @db.VarChar(20)
-  emailVerified DateTime?       @map("email_verified")
+  email         String    @unique
+  phone         String?   @unique @db.VarChar(20)
+  emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
-  role          Role            @default(USER)
+  role          Role      @default(USER)
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  accounts      Account[]
-  sessions      Session[]
+  accounts       Account[]
+  sessions       Session[]
   certifications Certification[]
-  testimonials  Testimonial[]
+  testimonials   Testimonial[]
+  blogs          Blog[]
+  visitors       Visitor[]
 
   @@map("users")
 }
@@ -70,98 +72,99 @@ model VerificationToken {
 }
 
 model Category {
-  id             String          @id @default(cuid())
+  id String @id @default(cuid())
 
-  name           Json
-  desc           Json?
+  name Json
+  desc Json?
 
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   certifications Certification[]
+  blogs          Blog[]
 
   @@map("categories")
 }
 
 model Certification {
-  id          String                @id @default(cuid())
+  id String @id @default(cuid())
 
-  name        Json
-  desc        Json
+  name Json
+  desc Json
 
-  sector      Json
-  duration    Json
+  sector   Json
+  duration Json
 
-  img         String?
+  img String?
 
-  price       Float
-  status      CertificationStatus  @default(ACTIVE)
+  price  Float
+  status CertificationStatus @default(ACTIVE)
 
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  adminId     String
-  admin       User                 @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId String
+  admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
-  categoryId  String
-  category    Category             @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@map("certifications")
 }
 
 model Testimonial {
-  id           String              @id @default(cuid())
+  id String @id @default(cuid())
 
-  testimonial  Json
-  status       TestimonialStatus   @default(VISIBLE)
+  testimonial Json
+  status      TestimonialStatus @default(VISIBLE)
 
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  userId       String
-  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("testimonials")
 }
 
 model About {
-  id          String    @id @default(cuid())
+  id String @id @default(cuid())
 
-  part        Json
-  desc        Json
+  part Json
+  desc Json
 
-  img         String?
+  img String?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("abouts")
 }
 
 model Service {
-  id          String    @id @default(cuid())
+  id String @id @default(cuid())
 
-  part        Json
-  desc        Json
+  part Json
+  desc Json
 
-  img         String?
+  img String?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("services")
 }
 
 model Package {
-  id           String    @id @default(cuid())
+  id String @id @default(cuid())
 
-  title        Json
-  subtitle     Json
-  short_desc   Json
-  long_desc    Json
+  title      Json
+  subtitle   Json
+  short_desc Json
+  long_desc  Json
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("packages")
 }
@@ -179,4 +182,65 @@ enum CertificationStatus {
 enum TestimonialStatus {
   VISIBLE
   HIDDEN
+}
+
+model Blog {
+  id String @id @default(cuid())
+
+  title   Json
+  slug    String @unique
+  excerpt Json?
+  content Json
+
+  img        String?
+  status     BlogStatus @default(DRAFT)
+  categoryId String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  adminId String
+  admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@map("blogs")
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Visitor {
+  id String @id @default(cuid())
+
+  userId String?
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  sessionId String? @db.VarChar(255)
+
+  ip        String? @db.VarChar(45)
+  userAgent String? @db.Text
+  browser   String? @db.VarChar(50)
+  os        String? @db.VarChar(50)
+  device    String? @db.VarChar(50)
+
+  referer String? @db.Text
+  path     String  @db.VarChar(500)
+
+  country String? @db.VarChar(100)
+  city    String? @db.VarChar(100)
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path])
+  @@index([ip])
+  @@index([sessionId])
+  @@index([userId])
+
+  @@map("visitors")
 }

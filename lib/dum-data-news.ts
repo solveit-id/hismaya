@@ -2,7 +2,7 @@ import type { News } from "@/types/news";
 
 export const newsData: News[] = [
   {
-    id: 1,
+    id: "1",
     title: "Pentingnya Sertifikasi Halal bagi Pelaku Usaha",
     slug: "pentingnya-sertifikasi-halal-bagi-pelaku-usaha",
     excerpt:
@@ -20,7 +20,7 @@ export const newsData: News[] = [
     readingTime: "5 menit baca",
   },
   {
-    id: 2,
+    id: "2",
     title: "Pelatihan Pendampingan Halal untuk Pelaku UMKM",
     slug: "pelatihan-pendampingan-halal-untuk-pelaku-umkm",
     excerpt:
@@ -37,7 +37,7 @@ export const newsData: News[] = [
     readingTime: "4 menit baca",
   },
   {
-    id: 3,
+    id: "3",
     title: "Sertifikasi Halal Membuka Peluang Pasar Ekspor",
     slug: "sertifikasi-halal-membuka-peluang-pasar-ekspor",
     excerpt:

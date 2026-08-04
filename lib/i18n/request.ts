@@ -81,6 +81,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
       footer: (await import(`@/messages/${activeLocale}/main/footer.json`))
         .default,
+      news: (await import(`@/messages/${activeLocale}/main/news.json`)).default,
     },
   };
 

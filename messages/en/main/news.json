@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "title": "News and Articles | Hismaya",
+    "description": "Discover the latest information about Hismaya's certifications, services, and developments."
+  },
+  "header": {
+    "eyebrow": "Latest Updates",
+    "title": "Hismaya News and Articles",
+    "description": "Discover the latest information about Hismaya's certifications, services, and developments."
+  },
+  "card": {
+    "readMore": "Read more"
+  },
+  "button": {
+    "viewAll": "View all news",
+    "back": "Back to news"
+  }
+}

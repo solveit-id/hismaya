@@ -2,6 +2,7 @@
 
 import { Link } from "@/lib/i18n/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import type { News } from "@/types/news";
 
@@ -43,6 +44,8 @@ const buttonVariants = {
 };
 
 export default function NewsSection({ news }: NewsSectionProps) {
+  const t = useTranslations("main.news");
+
   const latestNews = news.slice(0, 3);
 
   return (
@@ -64,16 +67,15 @@ export default function NewsSection({ news }: NewsSectionProps) {
             }}
           >
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#2457ff]">
-              Informasi Terkini
+              {t("header.eyebrow")}
             </p>
 
             <h2 className="mt-3 text-3xl font-bold text-[#252d3c] sm:text-4xl">
-              Berita dan Artikel Hismaya
+              {t("header.title")}
             </h2>
 
             <p className="mt-4 leading-7 text-gray-600">
-              Temukan informasi terbaru mengenai sertifikasi, layanan, dan
-              perkembangan Hismaya.
+              {t("header.description")}
             </p>
           </motion.div>
 
@@ -91,7 +93,7 @@ export default function NewsSection({ news }: NewsSectionProps) {
               href="/news"
               className="inline-flex w-fit rounded-lg border bg-[#078fd3] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#013f5e] hover:text-white"
             >
-              Lihat semua berita
+              {t("button.viewAll")}
             </Link>
           </motion.div>
         </div>

@@ -11,14 +11,15 @@ type NewsDetailPageProps = {
 };
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
-  const news = await getNewsBySlug(
-    params.slug,
-    params.locale
-  );
+  const news = await getNewsBySlug(params.slug, params.locale);
 
   if (!news) {
     notFound();
   }
 
-  return <NewsDetail news={news} />;
+  return (
+    <section id="news">
+      <NewsDetail news={news} />
+    </section>
+  );
 }

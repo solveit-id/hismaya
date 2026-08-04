@@ -5,7 +5,8 @@
     "service": "Service",
     "certification": "Certification",
     "package": "Bundling Package",
-    "news": "news"
+    "news": "News",
+    "certificationiso": "ISO Certification"
   },
   "auth": {
     "login": "Login"

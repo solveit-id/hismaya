@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "title": "Berita dan Artikel | Hismaya",
+    "description": "Temukan informasi terbaru mengenai sertifikasi, layanan, dan perkembangan Hismaya."
+  },
+  "header": {
+    "eyebrow": "Informasi Terkini",
+    "title": "Berita dan Artikel Hismaya",
+    "description": "Temukan informasi terbaru mengenai sertifikasi, layanan, dan perkembangan Hismaya."
+  },
+  "card": {
+    "readMore": "Baca selengkapnya"
+  },
+  "button": {
+    "viewAll": "Lihat semua berita",
+    "back": "Kembali ke berita"
+  }
+}
